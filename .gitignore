@@ -113,3 +113,5 @@ dmypy.json
 # Pyre type checker
 .pyre/
 blog/templates/blog/home.html
+.DS_Store
+*.png

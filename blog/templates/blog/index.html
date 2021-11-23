@@ -1,18 +1,24 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-    {% for post in blog_posts %}
-        <article class="media content-section">
-          <div class="media-body">
-            <div class="article-metadata">
-              <p class="mr-2">{{ post.author }}</a>
-              <small class="text-muted">{{ post.created_on }}</small>
-            </div>
-            <h2><a class="article-title" href="{% url 'blog:post' post.id %}">{{ post.title }}</a></h2>
-            <p class="article-content">{{ post.content }}</p>
-          </div>
-        </article>
+
+{% for post in blog_posts %}
+    <article class="blog-post">
+        <h2 class="blog-post-title">{{ post.title }}</h2>
+        <p class="blog-post-meta">{{ post.created_on|date:"d-m-Y" }} écrit par {{ post.author }}</p>
+
+        <p>{{ post.description }}</p>
+        <hr>
+        <p> {{ post.content|truncatewords:50 }}</p>
+        <p><a href="{% url 'blog:post' post.id %}">Lire plus...</a></p>
+
+      </article>
+
     {% endfor %}
+
+
 {% endblock content %}
+
+
 
 <!-- "> -->
