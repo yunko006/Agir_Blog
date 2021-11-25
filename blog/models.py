@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from tinymce import models as tinymce_models
 
 
 class Category(models.Model):
@@ -20,7 +21,7 @@ class BlogPost(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=200)
-    content = models.TextField()
+    content = tinymce_models.HTMLField()
     created_on = models.DateTimeField(auto_now_add=True)
     # updated_on
     categories = models.ManyToManyField(Category)

@@ -1,4 +1,8 @@
+
+{% block content %}
 <p> Post: {{ post }}</p>
 
 {{ post.author }}
-{{ post.content}}
+{{ post.content|safe}}
+
+{% endblock %}
