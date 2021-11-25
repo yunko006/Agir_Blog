@@ -32,3 +32,9 @@ class BlogPost(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class NewsPost(models.Model):
+
+    content = tinymce_models.HTMLField()
+
