@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 
     # Third party apps
     'tinymce',
+    'bootstrap5',
 ]
 
 MIDDLEWARE = [
@@ -136,9 +137,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # TinyMCE settings
 
+TINYMCE_JS_URL = 'https://cdn.tiny.cloud/1/ne73pc7lloxh0sb6hj1ib391zy3119rdmey6tuhmm6zeyvj2/tinymce/5/tinymce.min.js'
+TINYMCE_COMPRESSOR = False
+
 TINYMCE_DEFAULT_CONFIG = {
-    "height": "620px",
-    "width": "960px",
+    "height": "500px",
+    "width": "600x",
     "menubar": "file edit view insert format tools table help",
     "plugins": "advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code "
     "fullscreen insertdatetime media table paste code help wordcount spellchecker",
