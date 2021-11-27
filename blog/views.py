@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.core.paginator import Paginator
 from django.http import Http404
 
 from .models import *
@@ -15,7 +16,10 @@ def index(request):
     # donnée pour le coté droit de la page
     news = NewsPost.objects.all()
 
-    context = {'blog_posts': blog_posts, 'categories':categories, 'news':news}
+    paginator = Paginator(blog_posts, 5) # Show 5 posts per page.
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {'categories':categories, 'news':news, 'page_obj': page_obj}
 
     return render(request, 'blog/index.html', context)
 
@@ -24,7 +28,10 @@ def index(request):
 def post(request, post_id):
 
     post = BlogPost.objects.get(id=post_id)
-    context = {'post': post}
+    news = NewsPost.objects.all()
+
+
+    context = {'post': post, 'news': news}
     return render(request, 'blog/post.html', context)
 
 
@@ -62,12 +69,11 @@ def edit_news(request, news_id):
 
         form = NewsForm(instance=news)
 
-        print('hello')
     else:
         form = NewsForm(instance=news, data=request.POST)
-        print('ok mais pas bon')
+
         if form.is_valid():
-            print('caca')
+
             form.save()
             return redirect('blog:index')
 
