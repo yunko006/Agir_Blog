@@ -11,15 +11,23 @@ from .forms import *
 def index(request):
 
     blog_posts = BlogPost.objects.order_by('-created_on')
-    categories = Category.objects.all()
 
     # donnée pour le coté droit de la page
     news = NewsPost.objects.all()
 
+    # get featured post
+    featured_posts = BlogPost.featured_objects.all()
+    first_featured_posts = featured_posts[0]
+
+    # prends que les 2 et 3 featured post pour les mettres sous forme de card dans l'index.html
+    second_third_featured_posts = featured_posts[1:3]
+    # print(second_third_featured_posts)
+    # pagination
     paginator = Paginator(blog_posts, 5) # Show 5 posts per page.
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    context = {'categories':categories, 'news':news, 'page_obj': page_obj}
+
+    context = {'news':news, 'page_obj': page_obj, 'first_featured_posts': first_featured_posts, 'second_third_featured_posts': second_third_featured_posts}
 
     return render(request, 'blog/index.html', context)
 

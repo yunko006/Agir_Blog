@@ -1,8 +1,23 @@
+{% extends 'blog/base.html' %}
+
+
+{% block page_header %}
+    <h2 class="blog-post-title">{{ post.title }}</h2>
+{% endblock page_header %}
+
 
 {% block content %}
-<p> Post: {{ post }}</p>
 
-{{ post.author }}
-{{ post.content|safe}}
+    <article class="blog-post">
 
-{% endblock %}
+            <p class="blog-post-meta">{{ post.created_on|date:"d-m-Y" }} écrit par {{ post.author }}</p>
+
+            <p>{{ post.description }}</p>
+            <hr>
+            <p> {{ post.content|safe }}</p>
+            <p><a href="{% url 'blog:index' %}">Retour à l'acceuil</a></p>
+    </article>
+
+{% endblock content %}
+
+
