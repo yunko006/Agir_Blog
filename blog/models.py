@@ -10,6 +10,12 @@ class Category(models.Model):
         return self.title
 
 
+# First, define the Manager subclass.
+class FeaturedPostManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(featured=True)
+
+
 class BlogPost(models.Model):
 
     options = (
@@ -26,7 +32,15 @@ class BlogPost(models.Model):
     # updated_on
     categories = models.ManyToManyField(Category)
     status = models.CharField(max_length=10, choices=options, default=created_on)
+    featured = models.BooleanField(default=False) # rename en main_featured ?
+    # add other_featured ?
 
+    # manager
+    objects = models.Manager() # The default manager.
+    # Main featured post
+    featured_objects = FeaturedPostManager() # The FeaturedPost manager.
+    # other featured post
+    # other_featured_post = OtherFeaturedPostManager()
     class Meta:
         ordering = ('-created_on',)
 

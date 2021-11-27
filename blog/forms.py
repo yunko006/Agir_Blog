@@ -10,7 +10,7 @@ class PostForm(forms.ModelForm):
 
     class Meta:
         model = BlogPost
-        fields = ['author', 'title', 'description', 'content', 'categories', 'status']
+        fields = ['author', 'title', 'description', 'content', 'categories', 'status', 'featured']
         labels = {"author":"Auteur","title": "Titre de l'article", "description":"Description de l'article", "content":"Ecrire votre article"}
 
 
