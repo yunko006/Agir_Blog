@@ -7,8 +7,6 @@ from .models import *
 from .forms import *
 
 
-
-
 @login_required
 def index(request):
 
@@ -57,8 +55,9 @@ def new_post(request):
     else:
         form = PostForm(data=request.POST)
         if form.is_valid():
-
-            form.save()
+            new_article = form.save(commit=False)
+            new_article.author = request.user
+            new_article.save()
             return redirect('blog:index')
 
     context = {"form": form}
@@ -67,9 +66,25 @@ def new_post(request):
 
 
 @login_required
-@user_passes_test(lambda u: u.is_superuser) #check if user is superuser
+# @user_passes_test(lambda u: u.is_superuser) #check if user is superuser
 def edit_post(request, post_id):
-    pass
+    post = BlogPost.objects.get(id=post_id)
+    content = post.content
+    is_author(request, post)
+
+    if request.method != 'POST':
+
+        form = PostForm(instance=post)
+
+    else:
+        form = PostForm(instance=post, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("blog:index")
+
+    context = {"post": post, 'content': content, 'form': form}
+
+    return render(request, "blog/edit_post.html", context)
 
 
 @login_required
