@@ -43,16 +43,17 @@
     </div>
   </header>
 <!-- Les différentes catégories du blog -->
+
   <div class="nav-scroller py-1 mb-2">
     <nav class="nav d-flex justify-content-evenly">
       {% if request.user.is_superuser %}
         <a class="p-2 link-danger" href="{% url 'blog:new_post' %}">Nouvel Article</a>
       {% endif %}
-      <a class="p-2 link-secondary" href="#">Actualités</a>
-      <a class="p-2 link-secondary" href="#">Gal délégation</a>
-      <a class="p-2 link-secondary" href="#">Infos du monde</a>
-      <a class="p-2 link-secondary" href="#">Missions</a>
-      <a class="p-2 link-secondary" href="#">Partenaires</a>
+      <!-- A changer pour bien return les categories des blog post -->
+      <a class="p-2 link-secondary" href="{% url 'blog:category' cat='actualités' %}">Actualités</a>
+      <a class="p-2 link-secondary" href="{% url 'blog:category' cat='missions' %}">Missions</a>
+      <a class="p-2 link-secondary" href="{% url 'blog:category' cat='gal délégation' %}">Gal délégation</a>
+      <a class="p-2 link-secondary" href="{% url 'blog:category' cat='infos du monde' %}">Infos du Monde</a>
     </nav>
   </div>
 </div>

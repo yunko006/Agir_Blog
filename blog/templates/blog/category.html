@@ -1,0 +1,31 @@
+{% extends 'blog/base.html' %}
+
+
+{% block page_header %}
+<hr>
+<p>Article dans la catégorie : {{ cat }} </p>
+{% endblock page_header %}
+
+{% block content %}
+{% if categories %}
+    {% for post in categories %}
+    <article class="blog-post">
+        <h2 class="blog-post-title">{{ post.title }}</h2>
+        <p class="blog-post-meta">{{ post.created_on|date:"d-m-Y" }} écrit par {{ post.author }}</p>
+
+        <p>{{ post.description }}</p>
+        <hr>
+        <p> {{ post.content|safe|truncatewords:60 }}</p>
+        <p><a href="{% url 'blog:post' post.id %}">Lire plus...</a></p>
+
+      </article>
+{% endfor %}
+
+{% else %}
+
+<h2>Cette page n'existe pas...</h2>
+
+{%endif %}
+<p><a href="{% url 'blog:index' %}">Retour à l'acceuil</a></p>
+{% endblock content %}
+

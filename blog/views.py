@@ -7,6 +7,8 @@ from .models import *
 from .forms import *
 
 
+
+
 @login_required
 def index(request):
 
@@ -14,6 +16,9 @@ def index(request):
 
     # donnée pour le coté droit de la page
     news = NewsPost.objects.all()
+
+    # # categories
+    # categories = Category.objects.filter(title=category.replace('-', " "))
 
     # get featured post
     featured_posts = BlogPost.featured_objects.all()
@@ -23,7 +28,7 @@ def index(request):
     second_third_featured_posts = featured_posts[1:3]
     # print(second_third_featured_posts)
     # pagination
-    paginator = Paginator(blog_posts, 5) # Show 5 posts per page.
+    paginator = Paginator(blog_posts, 4) # Show X posts per page.
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -88,6 +93,15 @@ def edit_news(request, news_id):
     context = {"news": news, "content": content, "form": form}
 
     return render(request, 'blog/edit_news.html', context)
+
+
+@login_required
+def caterogy_views(request, cat):
+    categories = BlogPost.objects.filter(categories__title=cat.replace('-', " "))
+
+    context = {'cat': cat.replace('-', " "), 'categories': categories}
+
+    return render(request, 'blog/category.html', context)
 
 
 def is_author(request, post):
