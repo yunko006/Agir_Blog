@@ -10,19 +10,25 @@ class Category(models.Model):
         return self.title
 
 
-# First, define the Manager subclass.
-class FeaturedPostManager(models.Manager):
-    def get_queryset(self):
-        return super().get_queryset().filter(featured=True)
-
 
 class BlogPost(models.Model):
+
+    class FeaturedPostManager(models.Manager):
+        def get_queryset(self):
+            return super().get_queryset().filter(featured=True)
+
+    class StatusPostManager(models.Manager):
+        def get_queryset(self):
+            return super().get_queryset().filter(status='published')
+
+    class DraftPostManager(models.Manager):
+        def get_queryset(self):
+            return super().get_queryset().filter(status='draft')
 
     options = (
         ('draft', 'Draft'),
         ('published', 'Published'),
         )
-
 
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
@@ -33,14 +39,16 @@ class BlogPost(models.Model):
     categories = models.ManyToManyField(Category)
     status = models.CharField(max_length=10, choices=options, default=created_on)
     featured = models.BooleanField(default=False) # rename en main_featured ?
-    # add other_featured ?
 
     # manager
     objects = models.Manager() # The default manager.
     # Main featured post
     featured_objects = FeaturedPostManager() # The FeaturedPost manager.
-    # other featured post
-    # other_featured_post = OtherFeaturedPostManager()
+    # custom manager
+    postobjects = StatusPostManager()
+    # draft post manager
+    draftobjects = DraftPostManager()
+
     class Meta:
         ordering = ('-created_on',)
 

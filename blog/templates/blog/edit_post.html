@@ -30,7 +30,7 @@
 
     {% buttons %}
     <button name="submit" class="btn btn-primary" >Enregistrer les modifications</button>
-    <a class="btn btn-secondary" href="{% url 'blog:index' %}">Annuler</a>
+    <a class="btn btn-secondary" href="{% url 'blog:post' post.id %}">Annuler</a>
     {% endbuttons %}
   </form>
 

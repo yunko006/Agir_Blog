@@ -10,7 +10,7 @@ from .forms import *
 @login_required
 def index(request):
 
-    blog_posts = BlogPost.objects.order_by('-created_on')
+    blog_posts = BlogPost.postobjects.order_by('-created_on')
 
     # donnée pour le coté droit de la page
     news = NewsPost.objects.all()
@@ -33,6 +33,17 @@ def index(request):
     context = {'news':news, 'page_obj': page_obj, 'first_featured_posts': first_featured_posts, 'second_third_featured_posts': second_third_featured_posts}
 
     return render(request, 'blog/index.html', context)
+
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def index_draft_post(request):
+
+    draft_post = BlogPost.draftobjects.order_by('-created_on')
+
+    context = {'draft_post': draft_post}
+
+    return render(request, 'blog/draft.html', context)
 
 
 @login_required
@@ -113,8 +124,9 @@ def edit_news(request, news_id):
 @login_required
 def caterogy_views(request, cat):
     categories = BlogPost.objects.filter(categories__title=cat.replace('-', " "))
+    news = NewsPost.objects.all()
 
-    context = {'cat': cat.replace('-', " "), 'categories': categories}
+    context = {'cat': cat.replace('-', " "), 'categories': categories, 'news': news}
 
     return render(request, 'blog/category.html', context)
 

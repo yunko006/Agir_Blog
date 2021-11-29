@@ -48,6 +48,7 @@
     <nav class="nav d-flex justify-content-evenly">
       {% if request.user.is_superuser %}
         <a class="p-2 link-danger" href="{% url 'blog:new_post' %}">Nouvel Article</a>
+        <a class="p-2 link-danger" href="{% url 'blog:draft' %}">Voir draft</a>
       {% endif %}
       <!-- A changer pour bien return les categories des blog post -->
       <a class="p-2 link-secondary" href="{% url 'blog:category' cat='actualités' %}">Actualités</a>
