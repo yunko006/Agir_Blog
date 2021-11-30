@@ -30,7 +30,7 @@
       </div>
       <!-- Titre du blog -->
       <div class="col-6 text-sm-center">
-        <h3 class="blog-header-logo text-dark" href="#">Le blog des acteurs de l'international</h3>
+        <h3 class="blog-header-logo text-dark" href="#">Vie de la Délégation Internationale</h3>
 <!--         <small><a class="blog-subheader-logo text-dark"><br></a></small> -->
       </div>
       <!-- Bouton de recherche -->
@@ -52,9 +52,12 @@
       {% endif %}
       <!-- A changer pour bien return les categories des blog post -->
       <a class="p-2 link-secondary" href="{% url 'blog:category' cat='actualités' %}">Actualités</a>
-      <a class="p-2 link-secondary" href="{% url 'blog:category' cat='missions' %}">Missions</a>
-      <a class="p-2 link-secondary" href="{% url 'blog:category' cat='gal délégation' %}">Gal délégation</a>
+      <a class="p-2 link-secondary" href="{% url 'blog:category' cat='gal délégation' %}">Général Délégation</a>
       <a class="p-2 link-secondary" href="{% url 'blog:category' cat='infos du monde' %}">Infos du Monde</a>
+      <a class="p-2 link-secondary" href="{% url 'blog:category' cat='missions' %}">Missions/Projets</a>
+      <a class="p-2 link-secondary" href="#">Journal de Bord</a>
+      <a class="p-2 link-secondary" href="#">Partenaires</a>
+      <a class="p-2 link-secondary" href="#">Outils</a>
     </nav>
   </div>
 </div>
