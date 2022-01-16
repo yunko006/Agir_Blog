@@ -13,9 +13,6 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
-import django_heroku
-
-django_heroku.settings(locals())
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -170,3 +167,7 @@ TINYMCE_DEFAULT_CONFIG = {
     "language": "fr_FR",
 }
 TINYMCE_SPELLCHECKER = True
+
+# my settings
+import django_heroku
+django_heroku.settings(locals())
