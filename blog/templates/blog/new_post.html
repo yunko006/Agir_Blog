@@ -1,6 +1,8 @@
 {% load static %}
 {# Load the tag library #}
 {% load bootstrap5 %}
+
+{% include "blog/navbar.html" %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,22 +10,26 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- Bootstrap CSS -->
+    {# Load CSS and JavaScript #}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+
     {{ form.media }}
 
     <script src="https://cdn.tiny.cloud/1/ne73pc7lloxh0sb6hj1ib391zy3119rdmey6tuhmm6zeyvj2/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <script type="text/javascript">
-  tinymce.init({
-    selector: '#mytextarea',
-    width: 1200,
-    height:600,
-  });
+      tinymce.init({
+      selector: '#mytextarea',
+      width: 1200,
+      height:600,
+    });
   </script>
-  <!-- Bootstrap CSS -->
-    {# Load CSS and JavaScript #}
-    {% bootstrap_css %}
-    {% bootstrap_javascript %}
 </head>
+
 <body>
+
+<main role="main" class="container py-4">
 {% block content %}
   <form method="post" action="{% url 'blog:new_post' %}" class="form">
     {% csrf_token %}
@@ -34,19 +40,8 @@
     <a class="btn btn-secondary" href="{% url 'blog:index' %}">Annuler</a>
     {% endbuttons %}
   </form>
-
-
-<script>
-    tinymce.init({
-      // selector: 'textarea',
-
-      // plugins: 'a11ychecker advcode casechange export formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker',
-      // toolbar: 'a11ycheck addcomment showcomments casechange checklist code export formatpainter pageembed permanentpen table',
-      // toolbar_mode: 'floating',
-      // tinycomments_mode: 'embedded',
-      // tinycomments_author: 'Author name',
-    });
-  </script>
 {% endblock content %}
+</main>
+
 </body>
 </html>

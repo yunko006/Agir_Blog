@@ -1,6 +1,7 @@
 {% load static %}
 {# Load the tag library #}
 {% load bootstrap5 %}
+{% include "blog/navbar.html" %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,6 +24,7 @@
 </head>
 
 <body>
+<main role="main" class="container py-4">
 {% block content %}
   <form method="post" action="{% url 'blog:edit_post' post.id %}" class="form">
     {% csrf_token %}
@@ -33,7 +35,7 @@
     <a class="btn btn-secondary" href="{% url 'blog:post' post.id %}">Annuler</a>
     {% endbuttons %}
   </form>
-
+</main>
 
 <script>
     tinymce.init({

@@ -1,6 +1,6 @@
 {# Load the tag library #}
 {% load bootstrap5 %}
-
+{% include "blog/navbar.html" %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,6 +19,9 @@
 </head>
 <body>
 {% block content %}
+
+<main role="main" class="container py-4">
+  <hr>
   <form action="{% url 'blog:edit_news' news.id %}" method="post">
     {% csrf_token %}
     {% bootstrap_form form %}
@@ -28,6 +31,7 @@
     <a class="btn btn-secondary" href="{% url 'blog:index' %}">Annuler</a>
     {% endbuttons %}
   </form>
+</main>
 {% endblock content %}
 
 <script>
