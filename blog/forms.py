@@ -1,5 +1,4 @@
 from django import forms
-# from django.contrib.flatpages.models import FlatPage
 from tinymce.widgets import TinyMCE
 
 from .models import BlogPost, NewsPost
@@ -10,8 +9,31 @@ class PostForm(forms.ModelForm):
 
     class Meta:
         model = BlogPost
-        fields = ['title', 'description', 'content', 'categories', 'status', 'featured']
-        labels = {"title": "Titre de l'article", "description":"Description de l'article", "content":"Ecrire votre article"}
+        fields = ['redacteur', 'qualite', 'title',
+                  'content', 'categories', 'rubrique', 'stockage']
+        labels = {
+            "redacteur": "Nom et Prénom",
+            "qualite": "Qualité",
+            "title": "Titre de l'article",
+            "description": "Description de l'article",
+            "content": "Ecrire votre article"
+        }
+
+
+class EditPostForm(forms.ModelForm):
+    # content = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))
+
+    class Meta:
+        model = BlogPost
+        fields = ['redacteur', 'qualite', 'title',
+                  'content', 'categories', 'rubrique', 'status', 'featured', 'stockage']
+        labels = {
+            "redacteur": "Nom et Prénom",
+            "qualite": "Qualité",
+            "title": "Titre de l'article",
+            "description": "Description de l'article",
+            "content": "Ecrire votre article"
+        }
 
 
 class NewsForm(forms.ModelForm):
@@ -19,4 +41,4 @@ class NewsForm(forms.ModelForm):
     class Meta:
         model = NewsPost
         fields = ['content']
-        labels = {"content": "Texte"}
+        # labels = {"content": "Texte"}

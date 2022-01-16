@@ -5,10 +5,21 @@ from tinymce import models as tinymce_models
 
 class Category(models.Model):
     title = models.CharField(max_length=20)
+    # foreign key avec rubrique ou inversement pour pouvoir choisir les sous catégories
+    # parent = models.ForeignKey(
+    #     'self', on_delete=models.CASCADE, blank=True)
 
     def __str__(self):
         return self.title
 
+
+class Rubrique(models.Model):
+    category = models.ForeignKey(
+        'Category', on_delete=models.CASCADE, default="")
+    title = models.CharField(max_length=50, default="")
+
+    def __str__(self):
+        return self.title
 
 
 class BlogPost(models.Model):
@@ -28,22 +39,29 @@ class BlogPost(models.Model):
     options = (
         ('draft', 'Draft'),
         ('published', 'Published'),
-        )
+    )
 
     author = models.ForeignKey(User, on_delete=models.CASCADE)
+    redacteur = models.CharField(max_length=50, default="")
+    qualite = models.CharField(max_length=50, default="")
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=200)
     content = tinymce_models.HTMLField()
     created_on = models.DateTimeField(auto_now_add=True)
-    # updated_on
-    categories = models.ManyToManyField(Category)
-    status = models.CharField(max_length=10, choices=options, default=created_on)
-    featured = models.BooleanField(default=False) # rename en main_featured ?
+    categories = models.ForeignKey(
+        Category, on_delete=models.CASCADE, default="")
+    rubrique = models.ForeignKey(
+        Rubrique, on_delete=models.CASCADE, default="")
+    status = models.CharField(
+        max_length=10, choices=options, default='draft')
+    featured = models.BooleanField(default=False)  # rename en main_featured ?
+    # savoir si on veux stocker dans db agir.
+    stockage = models.BooleanField(default=False)
 
     # manager
-    objects = models.Manager() # The default manager.
+    objects = models.Manager()  # The default manager.
     # Main featured post
-    featured_objects = FeaturedPostManager() # The FeaturedPost manager.
+    featured_objects = FeaturedPostManager()  # The FeaturedPost manager.
     # custom manager
     postobjects = StatusPostManager()
     # draft post manager
@@ -60,3 +78,5 @@ class NewsPost(models.Model):
 
     content = tinymce_models.HTMLField()
 
+    def __str__(self):
+        return self.title
