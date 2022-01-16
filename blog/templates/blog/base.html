@@ -10,61 +10,26 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    {# Load CSS and JavaScript #}
-    {% bootstrap_css %}
-    {% bootstrap_javascript %}
+    <!-- Font -->
 
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+
+
+    <!-- Custom css -->
     <link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}">
+
+
 
 </head>
 <body>
-<div class="container">
-  <header class="blog-header py-3">
-    <div class="row flex-nowrap justify-content-between align-items-center">
-      <!-- Logo agir -->
-      <div class="col pt-1">
-        <a class="navbar-brand" href="{% url 'blog:index' %}">
-          <img src="{% static 'blog/Logo.png' %}" alt="Logo" width="111" height="91">
-        </a>
-      </div>
-      <!-- Titre du blog -->
-      <div class="col-6 text-sm-center">
-        <h3 class="blog-header-logo text-dark" href="#">Vie de la Délégation Internationale</h3>
-<!--         <small><a class="blog-subheader-logo text-dark"><br></a></small> -->
-      </div>
-      <!-- Bouton de recherche -->
-      <div class="col d-flex justify-content-end align-items-center">
-        <a class="link-secondary" href="#" aria-label="Search">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img" viewBox="0 0 24 24"><title>Search</title><circle cx="10.5" cy="10.5" r="7.5"/><path d="M21 21l-5.2-5.2"/></svg>
-        </a>
-        <!-- <a class="btn btn-sm btn-outline-secondary" href="#">Sign up</a> -->
-      </div>
-    </div>
-  </header>
-<!-- Les différentes catégories du blog -->
+  <!-- nav bar -->
+{% include 'blog/navbar.html' %}
 
-  <div class="nav-scroller py-1 mb-2">
-    <nav class="nav d-flex justify-content-evenly">
-      {% if request.user.is_superuser %}
-        <a class="p-2 link-danger" href="{% url 'blog:new_post' %}">Nouvel Article</a>
-        <a class="p-2 link-danger" href="{% url 'blog:draft' %}">Voir draft</a>
-      {% endif %}
-      <!-- A changer pour bien return les categories des blog post -->
-      <a class="p-2 link-secondary" href="{% url 'blog:category' cat='actualités' %}">Actualités</a>
-      <a class="p-2 link-secondary" href="{% url 'blog:category' cat='gal délégation' %}">Général Délégation</a>
-      <a class="p-2 link-secondary" href="{% url 'blog:category' cat='infos du monde' %}">Infos du Monde</a>
-      <a class="p-2 link-secondary" href="{% url 'blog:category' cat='missions' %}">Missions/Projets</a>
-      <a class="p-2 link-secondary" href="#">Journal de Bord</a>
-      <a class="p-2 link-secondary" href="#">Partenaires</a>
-      <a class="p-2 link-secondary" href="#">Outils</a>
-    </nav>
-  </div>
-</div>
 
-<!-- Gros panneau noir pour highlight un post -->
-<main role="main" class="container">
-  {% block page_header %} {% endblock page_header %}
+<main role="main" class="container py-4">
+  {% block page_header %}<!-- Gros panneau noir pour highlight un post --> {% endblock page_header %}
 
 
 <!-- Coté gauche du site : l'index  -->
@@ -77,11 +42,13 @@
     <div class="col-md-4">
       <div class="position-sticky" style="top: 2rem;">
         <div class="p-4 mb-3 bg-light rounded">
-          <h4 class="fst-italic">Infos Importantes</h4>
-          <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu sem scelerisque dui molestie convallis. Nullam dapibus lectus ut vehicula lacinia.</p>
+          <h4 class="fst-italic">Rappel</h4>
+          <p class="mb-0 text-danger">Il est indispensable d'être à jour de sa cotisation pour pouvoir partir en missions</p>
         </div>
         <!-- News importante du site -->
         <div class="p-4">
+          <h4 class="fst-italic">Flash Infos</h4>
+          <hr>
           {% for new in news %}
           <p class="mb-0"> {{ new.content|safe }}</p>
           {% if request.user.is_superuser %}
@@ -112,11 +79,15 @@
         </div> -->
         <!-- Lien utile -->
         <div class="p-4">
-          <h4 class="fst-italic">Retrouver l'association</h4>
+          <h4 class="fst-italic">Liens AGIRabcd</h4>
+          <hr>
           <ol class="list-unstyled">
-            <li><a href="#">Facebook</a></li>
+            <li><a href="#">Facebook/International</a></li>
+            <li><a href="https://www.agirabcd.org" target="_blank">AGIRabcd</a></li>
+            <li><a href="https://www.agirabcd.fr/intragir31/index.php/fr/liendumenuconnexionamoi">Intragir</a></li>
             <li><a href="#">Gaia</a></li>
-            <li><a href="#">Autres</a></li>
+            <li><a href="https://www.youtube.com/channel/UCI3fcCXznu1c3IEKL4VuK4g">Youtube</a></li>
+
           </ol>
         </div>
       </div>
@@ -124,8 +95,6 @@
   </div>
 </main>
 
-
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>
