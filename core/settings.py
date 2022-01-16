@@ -28,7 +28,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["192.168.1.22", "127.0.0.1"]
 
 
 # Application definition
@@ -85,12 +85,23 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': '5432'
+    }
+}
+
+"""
+DATABASES = {
+    'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
-
+"""
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
@@ -152,7 +163,7 @@ TINYMCE_DEFAULT_CONFIG = {
     "fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | "
     "a11ycheck ltr rtl | showcomments addcomment code",
     "custom_undo_redo_levels": 10,
-    "language": "fr_FR",  # To force a specific language instead of the Django current language.
+    # To force a specific language instead of the Django current language.
+    "language": "fr_FR",
 }
 TINYMCE_SPELLCHECKER = True
-
