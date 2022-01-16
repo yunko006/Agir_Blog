@@ -20,17 +20,20 @@ def index(request):
 
     # get featured post
     featured_posts = BlogPost.featured_objects.all()
-    first_featured_posts = featured_posts[0]
+    # first_featured_posts = featured_posts[0]
 
     # prends que les 2 et 3 featured post pour les mettres sous forme de card dans l'index.html
-    second_third_featured_posts = featured_posts[1:3]
+    # second_third_featured_posts = featured_posts[1:3]
+    # uniquement trois post mis en avant.
+    trois_featured = featured_posts[:3]
     # print(second_third_featured_posts)
     # pagination
-    paginator = Paginator(blog_posts, 4) # Show X posts per page.
+    paginator = Paginator(blog_posts, 5)  # Show X posts per page.
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    context = {'news':news, 'page_obj': page_obj, 'first_featured_posts': first_featured_posts, 'second_third_featured_posts': second_third_featured_posts}
+    context = {'news': news, 'page_obj': page_obj,
+               'trois_featured': trois_featured}
 
     return render(request, 'blog/index.html', context)
 
@@ -52,13 +55,11 @@ def post(request, post_id):
     post = BlogPost.objects.get(id=post_id)
     news = NewsPost.objects.all()
 
-
     context = {'post': post, 'news': news}
     return render(request, 'blog/post.html', context)
 
 
 @login_required
-@user_passes_test(lambda u: u.is_superuser)
 def new_post(request):
     if request.method != "POST":
         form = PostForm()
@@ -85,10 +86,10 @@ def edit_post(request, post_id):
 
     if request.method != 'POST':
 
-        form = PostForm(instance=post)
+        form = EditPostForm(instance=post)
 
     else:
-        form = PostForm(instance=post, data=request.POST)
+        form = EditPostForm(instance=post, data=request.POST)
         if form.is_valid():
             form.save()
             return redirect("blog:index")
@@ -99,7 +100,7 @@ def edit_post(request, post_id):
 
 
 @login_required
-@user_passes_test(lambda u:u.is_superuser)
+@user_passes_test(lambda u: u.is_superuser)
 def edit_news(request, news_id):
     news = NewsPost.objects.get(id=news_id)
     content = news.content
@@ -123,12 +124,36 @@ def edit_news(request, news_id):
 
 @login_required
 def caterogy_views(request, cat):
-    categories = BlogPost.objects.filter(categories__title=cat.replace('-', " "))
+    categories = BlogPost.postobjects.filter(
+        categories__title=cat.replace('-', " "))
+
+    print(categories)
+
     news = NewsPost.objects.all()
 
-    context = {'cat': cat.replace('-', " "), 'categories': categories, 'news': news}
+    context = {
+        'cat': cat.replace('-', " "),
+        'categories': categories,
+        'news': news
+    }
 
     return render(request, 'blog/category.html', context)
+
+
+@login_required
+def rubrique_views(request, rub, sub_id):
+
+    une_rubrique = BlogPost.postobjects.filter(rubrique__title=rub)
+
+    news = NewsPost.objects.all()
+
+    context = {
+        'sub_id': sub_id,
+        'categories': categories,
+        'news': news,
+    }
+
+    return render(request, 'blog/rubrique.html', context)
 
 
 def is_author(request, post):
