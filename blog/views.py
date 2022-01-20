@@ -54,9 +54,12 @@ def index_draft_post(request):
 def post(request, post_id):
 
     post = BlogPost.objects.get(id=post_id)
-    news = NewsPost.objects.all()
 
-    context = {'post': post, 'news': news}
+    # coté droit du site
+    news = NewsPost.objects.all()
+    rappel = Rappel.objects.all()
+
+    context = {'post': post, 'news': news, 'rappel': rappel}
     return render(request, 'blog/post.html', context)
 
 
