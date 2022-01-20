@@ -1,7 +1,7 @@
 from django import forms
 from tinymce.widgets import TinyMCE
 
-from .models import BlogPost, NewsPost
+from .models import BlogPost, NewsPost, Rappel
 
 
 class PostForm(forms.ModelForm):
@@ -42,3 +42,10 @@ class NewsForm(forms.ModelForm):
         model = NewsPost
         fields = ['content']
         # labels = {"content": "Texte"}
+
+
+class EditRappelForm(forms.ModelForm):
+
+    class Meta:
+        model = Rappel
+        fields = ['title', 'content']

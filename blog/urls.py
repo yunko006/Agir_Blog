@@ -10,6 +10,7 @@ urlpatterns = [
     path('new_post/', views.new_post, name='new_post'),
     path('edit_post/<int:post_id>', views.edit_post, name='edit_post'),
     path('edit_news/<int:news_id>', views.edit_news, name='edit_news'),
+    path('edit_rappel/<int:rappel_id>', views.edit_rappel, name='edit_rappel'),
     path('category/<str:cat>', views.caterogy_views, name='category'),
     # # acceder a une sous categorie
     # path('category/<str:cat>/<str:sub_id>', views.rubrique_views, name='rubrique'),

@@ -22,6 +22,10 @@ class Rubrique(models.Model):
         return self.title
 
 
+class Rappel(models.Model):
+    title = models.CharField(max_length=20)
+    content = tinymce_models.HTMLField()
+
 class BlogPost(models.Model):
 
     class FeaturedPostManager(models.Manager):

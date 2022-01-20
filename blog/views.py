@@ -14,6 +14,7 @@ def index(request):
 
     # donnée pour le coté droit de la page
     news = NewsPost.objects.all()
+    rappel = Rappel.objects.all()
 
     # # categories
     # categories = Category.objects.filter(title=category.replace('-', " "))
@@ -32,7 +33,7 @@ def index(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    context = {'news': news, 'page_obj': page_obj,
+    context = {'news': news, 'rappel': rappel, 'page_obj': page_obj,
                'trois_featured': trois_featured}
 
     return render(request, 'blog/index.html', context)
@@ -120,6 +121,29 @@ def edit_news(request, news_id):
     context = {"news": news, "content": content, "form": form}
 
     return render(request, 'blog/edit_news.html', context)
+
+
+def edit_rappel(request, rappel_id):
+    rappel = Rappel.objects.get(id=rappel_id)
+    content = rappel.content
+
+    if request.method != 'POST':
+        form = EditRappelForm(instance=rappel)
+
+    else:
+        form = EditRappelForm(instance=rappel, data=request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect('blog:index')
+
+    context = {
+        "rappel": rappel,
+        "content": content,
+        "form": form
+    }
+
+    return render(request, 'blog/edit_rappel.html', context)
 
 
 @login_required
