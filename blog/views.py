@@ -103,6 +103,21 @@ def edit_post(request, post_id):
     return render(request, "blog/edit_post.html", context)
 
 
+@user_passes_test(lambda u: u.is_superuser)
+def delete_post(request, post_id):
+    post = BlogPost.objects.get(id=post_id)
+
+    if request.method == 'POST':
+        post.delete()
+        return redirect('blog:index')
+
+    context = {
+        "post": post
+    }
+
+    return render(request, 'blog/delete_post.html', context)
+
+
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def edit_news(request, news_id):
@@ -126,6 +141,7 @@ def edit_news(request, news_id):
     return render(request, 'blog/edit_news.html', context)
 
 
+@user_passes_test(lambda u: u.is_superuser)
 def edit_rappel(request, rappel_id):
     rappel = Rappel.objects.get(id=rappel_id)
     content = rappel.content
@@ -154,14 +170,23 @@ def caterogy_views(request, cat):
     categories = BlogPost.postobjects.filter(
         categories__title=cat.replace('-', " "))
 
-    print(categories)
+    # featured articles
+    featured_posts = BlogPost.featured_objects.all()
+    # uniquement trois post mis en avant.
+    trois_featured = featured_posts[:3]
 
+    # donnée pour le coté droit de la page
     news = NewsPost.objects.all()
+    rappel = Rappel.objects.all()
+
+    # pagination a faire plus tard
 
     context = {
         'cat': cat.replace('-', " "),
         'categories': categories,
-        'news': news
+        'trois_featured': trois_featured,
+        'news': news,
+        'rappel': rappel
     }
 
     return render(request, 'blog/category.html', context)

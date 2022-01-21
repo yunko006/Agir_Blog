@@ -1,0 +1,21 @@
+{% extends 'blog/base.html' %}
+{% load bootstrap5 %}
+
+{% block page_header %}
+
+{% endblock %}
+
+{% block content %}
+
+  <hr>
+  <p>Etes vous sur de vouloir supprimer ce post ?</p>
+  <form action="{% url 'blog:delete_post' post.id %}" method="post">
+    {% csrf_token %}
+
+    {% buttons %}
+    <button name="submit" class="btn btn-primary">Oui, supprimer</button>
+    <a class="btn btn-secondary" href="{% url 'blog:post' post.id %}">Non, annuler</a>
+    {% endbuttons %}
+  </form>
+
+{% endblock content %}
