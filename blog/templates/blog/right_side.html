@@ -1,0 +1,42 @@
+{# Load the tag library #}
+{% load bootstrap5 %}
+
+<div class="position-sticky" style="top: 2rem;">
+        <div class="p-4 mb-3 bg-light rounded">
+        {% for r in rappel %}
+          <h4 class="fst-italic">{{ r.title }}</h4>
+          <p class="mb-0">{{ r.content|safe }}</p>
+          {% if request.user.is_superuser %}
+            {% buttons %}
+            <a class="btn btn-primary" href="{% url 'blog:edit_rappel' r.id %}">Modifier</a>
+            {% endbuttons %}
+          {% endif %}
+        {% endfor %}
+        </div>
+        <!-- News importante du site -->
+        <div class="p-4">
+          <h4 class="fst-italic">Flash Infos</h4>
+          <hr>
+          {% for new in news %}
+          <p class="mb-0"> {{ new.content|safe }}</p>
+          {% if request.user.is_superuser %}
+            {% buttons %}
+            <a class="btn btn-primary" href="{% url 'blog:edit_news' new.id %}">Modifier</a>
+            {% endbuttons %}
+          {% endif %}
+        </div>
+        {% endfor %}
+
+        <!-- Lien utile -->
+        <div class="p-4">
+          <h4 class="fst-italic">Liens AGIRabcd</h4>
+          <hr>
+          <ol class="list-unstyled">
+            <li><a href="https://www.agirabcd.eu" target="_blank">AGIRabcd</a></li>
+            <li><a href="https://www.agirabcd.fr/intragir31/index.php/fr/liendumenuconnexionamoi">Intragir</a></li>
+            <li><a href="#">Gaia</a></li>
+            <li><a href="https://www.youtube.com/channel/UCI3fcCXznu1c3IEKL4VuK4g">Youtube</a></li>
+
+          </ol>
+        </div>
+      </div>
