@@ -116,3 +116,4 @@ blog/templates/blog/home.html
 .DS_Store
 *.png
 blog/useless.html
+latest.dump
