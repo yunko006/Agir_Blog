@@ -1,47 +1,16 @@
-{% load static %}
-{# Load the tag library #}
+{% extends 'blog/base.html' %}
 {% load bootstrap5 %}
 
-{% include "blog/navbar.html" %}
-<!DOCTYPE html>
-<html>
-<head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Bootstrap CSS -->
-    {# Load CSS and JavaScript #}
-    {% bootstrap_css %}
-    {% bootstrap_javascript %}
-
-    {{ form.media }}
-
-    <script src="https://cdn.tiny.cloud/1/ne73pc7lloxh0sb6hj1ib391zy3119rdmey6tuhmm6zeyvj2/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-    <script type="text/javascript">
-      tinymce.init({
-      selector: '#mytextarea',
-      width: 1200,
-      height:600,
-    });
-  </script>
-</head>
-
-<body>
-
-<main role="main" class="container py-4">
 {% block content %}
   <form method="post" action="{% url 'blog:new_post' %}" class="form">
     {% csrf_token %}
     {% bootstrap_form form %}
 
     {% buttons %}
-    <button name="submit" class="btn btn-primary" >Add</button>
+    <button name="submit" class="btn btn-primary" >Ajouter aux brouillons</button>
     <a class="btn btn-secondary" href="{% url 'blog:index' %}">Annuler</a>
     {% endbuttons %}
   </form>
 {% endblock content %}
-</main>
 
-</body>
-</html>

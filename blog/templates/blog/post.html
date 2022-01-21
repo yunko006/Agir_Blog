@@ -20,6 +20,7 @@
     {% buttons %}
     {% if post.author == request.user or request.user.is_superuser %}
         <a class="btn btn-primary" href="{% url 'blog:edit_post' post.id %}">Modifier l'article</a>
+        <a class="btn btn-danger" href="{% url 'blog:delete_post' post.id %}">Supprimer l'article</a>
     {% endif %}
     {% endbuttons %}
 

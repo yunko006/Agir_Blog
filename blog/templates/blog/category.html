@@ -1,32 +1,51 @@
 {% extends 'blog/base.html' %}
+{% load bootstrap5 %}
 
+<!-- nouveau -->
 
 {% block page_header %}
-<hr>
-<p>Article dans la catégorie : {{ cat }} </p>
+
+ {% include 'blog/featured_articles.html' %}
+  <hr>
+
 {% endblock page_header %}
 
 {% block content %}
-{% if categories %}
-    {% for post in categories %}
-    <article class="blog-post mb-4">
-      <h3 class="mb-0"><a href="{% url 'blog:post' post.id %}">{{ post.title }}</a></h3>
-      <p class="mb-0 blog-post-meta">{{ post.created_on|date:"d-m-Y" }} écrit par {{ post.redacteur }} - {{ post.qualite }}</p>
-      <p class="text-primary">{{ post.rubrique.title }}</p>
 
-      <p> {{ post.content|safe|truncatewords:60 }} <a href="{% url 'blog:post' post.id %}"></a></p>
+<!-- copier coller début -->
 
-    </article>
-<hr>
-{% endfor %}
+<div class="row">
+    <div class="col-md-8">
+      <!-- changer ici -->
+      <p>Article dans la catégorie : {{ cat }} </p>
 
+      {% if categories %}
+        {% for post in categories %}
+        <article class="blog-post mb-4">
+          <h3 class="mb-0"><a href="{% url 'blog:post' post.id %}">{{ post.title }}</a></h3>
+          <p class="mb-0 blog-post-meta">{{ post.created_on|date:"d-m-Y" }} écrit par {{ post.redacteur }} - {{ post.qualite }}</p>
+          <p class="text-primary">{{ post.rubrique.title }}</p>
 
+          <p> {{ post.content|safe|truncatewords:60 }} <a href="{% url 'blog:post' post.id %}"></a></p>
 
-{% else %}
+        </article>
+        <hr>
 
-<h2>Cette page n'existe pas...</h2>
+      {% endfor %}
+    {% else %}
 
-{%endif %}
-<p><a href="{% url 'blog:index' %}">Retour à l'acceuil</a></p>
+    <h2>Cette page n'existe pas...</h2>
+
+    {%endif %}
+    <p><a href="{% url 'blog:index' %}">Retour à l'acceuil</a></p>
+
+    </div>
+
+<!-- Coté droit du site  -->
+    <div class="col-md-4">
+
+      {% include 'blog/right_side.html' %}
+
+    </div>
+  </div>
 {% endblock content %}
-
