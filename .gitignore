@@ -114,9 +114,11 @@ dmypy.json
 .pyre/
 blog/templates/blog/home.html
 .DS_Store
-*.png
 blog/useless.html
 latest.dump
 blog/static/blog/facebook-svgrepo-com.svg
 blog/static/blog/gaiaonline-logo-svgrepo-com.svg
 blog/static/blog/youtube-svgrepo-com.svg
+blog/static/blog/cartouche.png
+blog/static/blog/Homepage.png
+blog/static/blog/logo-header.png
