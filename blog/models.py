@@ -34,7 +34,7 @@ class BlogPost(models.Model):
 
     class StatusPostManager(models.Manager):
         def get_queryset(self):
-            return super().get_queryset().filter(published=True)
+            return super().get_queryset().filter(published=True, featured=False)
 
     class DraftPostManager(models.Manager):
         def get_queryset(self):
