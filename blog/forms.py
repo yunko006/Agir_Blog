@@ -26,7 +26,7 @@ class EditPostForm(forms.ModelForm):
     class Meta:
         model = BlogPost
         fields = ['redacteur', 'qualite', 'title',
-                  'content', 'categories', 'rubrique', 'status', 'featured', 'stockage']
+                  'content', 'categories', 'rubrique', 'status', 'published', 'featured', 'stockage']
         labels = {
             "redacteur": "Nom et Prénom",
             "qualite": "Qualité",
