@@ -1,14 +1,15 @@
 {% extends 'blog/base.html' %}
 
 {% block page_header %}
-<h2 class="text-center">Articles en phase de brouillon</h2>
+<hr>
+<h2 class="text-center">Articles a valider</h2>
 
 {% endblock page_header %}
 
 
 {% block content %}
 
-{% for post in  draft_post %}
+{% for post in  a_publier_post %}
     <article class="blog-post">
         <h3 class="mb-0"><a class="text-decoration-none" href="{% url 'blog:post' post.id %}">{{ post.title }}</a></h3>
         <p class="mb-0 blog-post-meta">{{ post.created_on|date:"d-m-Y" }} écrit par {{ post.redacteur }} - {{ post.qualite }}</p>

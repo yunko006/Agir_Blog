@@ -10,7 +10,9 @@
 
     {% buttons %}
     <button name="submit" class="btn btn-primary" >Enregistrer les modifications</button>
-    <a class="btn btn-secondary" href="{% url 'blog:delete_post' post.id %}">Supprimer</a>
+    {% if request.user.is_superuser %}
+      <a class="btn btn-danger" href="{% url 'blog:delete_post' post.id %}">Supprimer</a>
+    {% endif %}
     <a class="btn btn-secondary" href="{% url 'blog:post' post.id %}">Annuler</a>
     {% endbuttons %}
   </form>
