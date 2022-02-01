@@ -34,6 +34,15 @@ ALLOWED_HOSTS = ["192.168.1.22", "127.0.0.1"]
 # Application definition
 
 INSTALLED_APPS = [
+    # My apps
+    'blog',
+    'users',
+
+    # Third party apps
+    'tinymce',
+    'bootstrap5',
+
+    # base apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,12 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # My apps
-    'blog',
 
-    # Third party apps
-    'tinymce',
-    'bootstrap5',
 ]
 
 MIDDLEWARE = [
@@ -168,6 +172,13 @@ TINYMCE_DEFAULT_CONFIG = {
 }
 TINYMCE_SPELLCHECKER = True
 
+LOGIN_URL = 'users:login'
+
 # my settings
 import django_heroku
 django_heroku.settings(locals())
+
+if os.environ.get('DEBUG') == 'TRUE':
+    DEBUG = True
+elif os.environ.get('DEBUG') == 'FALSE':
+    DEBUG = False
