@@ -34,15 +34,19 @@ class BlogPost(models.Model):
 
     class StatusPostManager(models.Manager):
         def get_queryset(self):
-            return super().get_queryset().filter(status='published')
+            return super().get_queryset().filter(published=True)
 
     class DraftPostManager(models.Manager):
         def get_queryset(self):
-            return super().get_queryset().filter(status='draft')
+            return super().get_queryset().filter(status='draft', published=False)
+
+    class EditPostManager(models.Manager):
+        def get_queryset(self):
+            return super().get_queryset().filter(status='edit', published=False)
 
     options = (
-        ('draft', 'Draft'),
-        ('published', 'Published'),
+        ('draft', 'Brouillon'),
+        ('edit', 'A publier'),
     )
 
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -58,6 +62,7 @@ class BlogPost(models.Model):
         Rubrique, on_delete=models.CASCADE, default="")
     status = models.CharField(
         max_length=10, choices=options, default='draft')
+    published = models.BooleanField(default=False)
     featured = models.BooleanField(default=False)  # rename en main_featured ?
     # savoir si on veux stocker dans db agir.
     stockage = models.BooleanField(default=False)
@@ -70,6 +75,8 @@ class BlogPost(models.Model):
     postobjects = StatusPostManager()
     # draft post manager
     draftobjects = DraftPostManager()
+    # a publier manager
+    a_publier_objects = EditPostManager()
 
     class Meta:
         ordering = ('-created_on',)
