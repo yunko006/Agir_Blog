@@ -117,3 +117,6 @@ blog/templates/blog/home.html
 *.png
 blog/useless.html
 latest.dump
+blog/static/blog/facebook-svgrepo-com.svg
+blog/static/blog/gaiaonline-logo-svgrepo-com.svg
+blog/static/blog/youtube-svgrepo-com.svg
