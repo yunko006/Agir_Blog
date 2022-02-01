@@ -7,6 +7,19 @@ from .models import *
 from .forms import *
 
 
+def must_be_redacteur(user):
+    return user.groups.filter(name='redacteur').count() or user.is_superuser
+
+
+def must_be_correcteur(user):
+    return user.groups.filter(name='correcteur').count() or user.is_superuser
+
+
+def more_than_lecteur(user):
+    # check if the user's group is not lecteur
+    return not user.groups.filter(name='lecteur').count()
+
+
 @login_required
 def index(request):
 
@@ -40,14 +53,45 @@ def index(request):
 
 
 @login_required
-@user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(more_than_lecteur)
 def index_draft_post(request):
+    # if not request.user.is_superuser:
+    #     draft_post = BlogPost.draftobjects.filter(
+    #         author=request.user).order_by('-created_on')
 
-    draft_post = BlogPost.draftobjects.order_by('-created_on')
+    if request.user.is_superuser:
+        draft_post = BlogPost.draftobjects.order_by('-created_on')
+
+    elif request.user.groups.filter(name='redacteur'):
+        draft_post = BlogPost.draftobjects.filter(
+            author=request.user).order_by('-created_on')
+
+    elif request.user.groups.filter(name='correcteur'):
+        draft_post = BlogPost.draftobjects.order_by('-created_on')
+
+    else:
+        raise Http404
 
     context = {'draft_post': draft_post}
 
     return render(request, 'blog/draft.html', context)
+
+
+@login_required
+@user_passes_test(must_be_correcteur)
+def index_a_publier_post(request):
+    if request.user.is_superuser:
+        a_publier_post = BlogPost.a_publier_objects.order_by('-created_on')
+
+    elif request.user.groups.filter(name='correcteur'):
+        a_publier_post = BlogPost.a_publier_objects.order_by('-created_on')
+
+    else:
+        raise Http404
+
+    context = {'a_publier_post': a_publier_post}
+
+    return render(request, 'blog/a_publier.html', context)
 
 
 @login_required
@@ -64,6 +108,7 @@ def post(request, post_id):
 
 
 @login_required
+@user_passes_test(more_than_lecteur)
 def new_post(request):
     if request.method != "POST":
         form = PostForm()
@@ -82,27 +127,53 @@ def new_post(request):
 
 
 @login_required
-# @user_passes_test(lambda u: u.is_superuser) #check if user is superuser
+@user_passes_test(more_than_lecteur)  # check if user is superuser
 def edit_post(request, post_id):
     post = BlogPost.objects.get(id=post_id)
     content = post.content
-    is_author(request, post)
+    # is_author(request, post) # cette merde ne marche pas
+    if request.user.is_superuser:
+        if request.method != 'POST':
 
-    if request.method != 'POST':
+            form = EditPostForm(instance=post)
+            # le truc c'est ca check pas en temps réel trouver une autre idée ?
+            # form.fields["published"].widget = forms.HiddenInput()
+            # print(form.fields["categories"].widget)
+            # if form.fields["categories"].widget == 'Missions':
 
-        form = EditPostForm(instance=post)
+            #     form.fields["rubrique"].widget = forms.ShowInput()
+
+        else:
+            form = EditPostForm(instance=post, data=request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect("blog:index")
 
     else:
-        form = EditPostForm(instance=post, data=request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect("blog:index")
+
+        if request.method != 'POST':
+
+            form = EditPostForm(instance=post)
+            # hide published field and featured field if not superuser
+            form.fields["published"].widget = forms.HiddenInput()
+            form.fields["featured"].widget = forms.HiddenInput()
+            # print(form.fields["categories"].widget)
+            # if form.fields["categories"].widget == 'Missions':
+
+            #     form.fields["rubrique"].widget = forms.ShowInput()
+
+        else:
+            form = EditPostForm(instance=post, data=request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect("blog:index")
 
     context = {"post": post, 'content': content, 'form': form}
 
     return render(request, "blog/edit_post.html", context)
 
 
+@login_required
 @user_passes_test(lambda u: u.is_superuser)
 def delete_post(request, post_id):
     post = BlogPost.objects.get(id=post_id)
@@ -141,6 +212,7 @@ def edit_news(request, news_id):
     return render(request, 'blog/edit_news.html', context)
 
 
+@login_required
 @user_passes_test(lambda u: u.is_superuser)
 def edit_rappel(request, rappel_id):
     rappel = Rappel.objects.get(id=rappel_id)
@@ -193,21 +265,35 @@ def caterogy_views(request, cat):
 
 
 @login_required
-def rubrique_views(request, rub, sub_id):
+def rubrique_views(request, cat, rub_title):
 
-    une_rubrique = BlogPost.postobjects.filter(rubrique__title=rub)
+    rubrique_title = BlogPost.postobjects.filter(rubrique__title=rub_title)
+    # rubrique_parent = BlogPost.postobjects.filter(rubrique__category=cat)
 
+    # featured articles
+    featured_posts = BlogPost.featured_objects.all()
+    # uniquement trois post mis en avant.
+    trois_featured = featured_posts[:3]
+
+    # donnée pour le coté droit de la page
     news = NewsPost.objects.all()
+    rappel = Rappel.objects.all()
+
+    # pagination a faire plus tard
 
     context = {
-        'sub_id': sub_id,
-        'categories': categories,
+        'cat': cat.replace('-', " "),
+        'rub_title': rub_title,
+        'rubrique_title': rubrique_title,
+        'trois_featured': trois_featured,
         'news': news,
+        'rappel': rappel
     }
 
     return render(request, 'blog/rubrique.html', context)
 
 
 def is_author(request, post):
-    if post.author != request.user:
-        raise Http404
+    if request.user is not request.user.is_superuser:
+        if post.author != request.user:
+            raise Http404

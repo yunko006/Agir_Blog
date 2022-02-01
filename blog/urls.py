@@ -18,7 +18,9 @@ urlpatterns = [
     # coté droit du site
     path('category/<str:cat>', views.caterogy_views, name='category'),
     # # acceder a une sous categorie
-    # path('category/<str:cat>/<str:sub_id>', views.rubrique_views, name='rubrique'),
+    path('category/<str:cat>/<str:rub_title>',
+         views.rubrique_views, name='rubrique'),
     # draft
     path('draft/', views.index_draft_post, name='draft'),
+    path('publication/', views.index_a_publier_post, name='publication'),
 ]
