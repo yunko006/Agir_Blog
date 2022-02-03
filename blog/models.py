@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 from tinymce import models as tinymce_models
 
 
@@ -55,7 +56,7 @@ class BlogPost(models.Model):
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=200)
     content = tinymce_models.HTMLField()
-    created_on = models.DateTimeField(auto_now_add=True)
+    created_on = models.DateTimeField(default=timezone.now)
     categories = models.ForeignKey(
         Category, on_delete=models.CASCADE, default="")
     rubrique = models.ForeignKey(
