@@ -1,0 +1,100 @@
+<!-- navs -->
+<ul class="nav text-white justify-content-center flex-column flex-sm-row" style="background-color:darkblue;">
+  {% if request.user.is_superuser %}
+  <li class="nav-item dropdown">
+    <a class="nav-link text-white dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Article</a>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="{% url 'blog:new_post' %}">Ecrire un article</a></li>
+      <li><hr class="dropdown-divider"></li>
+      <li><a class="dropdown-item" href="{% url 'blog:draft' %}">Tous les brouillons</a></li>
+      <li><a class="dropdown-item" href="{% url 'blog:publication' %}">A publier</a></li>
+    </ul>
+  </li>
+  {% endif %}
+  {% ifequal user.groups.all.0.name "correcteur"%}
+  <li class="nav-item dropdown">
+    <a class="nav-link text-white dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Article</a>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="{% url 'blog:new_post' %}">Ecrire un article</a></li>
+      <li><hr class="dropdown-divider"></li>
+      <li><a class="dropdown-item" href="{% url 'blog:draft' %}">Tous les brouillons</a></li>
+      <li><a class="dropdown-item" href="{% url 'blog:publication' %}">A publier</a></li>
+    </ul>
+  </li>
+  {% endifequal %}
+  {% ifequal user.groups.all.0.name "redacteur"%}
+  <li class="nav-item dropdown">
+    <a class="nav-link text-white dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Article</a>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="{% url 'blog:new_post' %}">Ecrire un article</a></li>
+      <li><hr class="dropdown-divider"></li>
+      <li><a class="dropdown-item" href="{% url 'blog:draft' %}">Mes brouillons</a></li>
+      <!-- <li><a class="dropdown-item" href="{% url 'blog:publication' %}">A publier</a></li> -->
+    </ul>
+  </li>
+  {% endifequal %}
+
+  <li class="nav-item dropdown">
+    <a class="nav-link text-white dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Délégation</a>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="{% url 'blog:category' cat='Délégation' %}">Voir tout</a></li>
+      <li><hr class="dropdown-divider"></li>
+      <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Expertise' rub_title='Fonctionnement' %}">Fonctionnement</a></li>
+      <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Expertise' rub_title='Communication' %}">Communication</a></li>
+      <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Expertise' rub_title='Partenaires' %}">Partenaires</a></li>
+            <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Expertise' rub_title='Outils' %}">Outils</a></li>
+      <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Expertise' rub_title='Flash' %}">Flash infos</a></li>
+    </ul>
+  </li>
+  <li class="nav-item dropdown">
+    <a class="nav-link text-white dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Activité en délégations</a>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="{% url 'blog:category' cat='Activité' %}">Voir tout</a></li>
+      <li><hr class="dropdown-divider"></li>
+      <li><a class="dropdown-item" href="#">A faire</a></li>
+    </ul>
+  </li>
+  <li class="nav-item dropdown">
+    <a class="nav-link text-white dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Expertise</a>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="{% url 'blog:category' cat='Expertise' %}">Voir tout</a></li>
+      <li><hr class="dropdown-divider"></li>
+      <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Expertise' rub_title='Développement rural' %}">Dévelop. Rural</a></li>
+      <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Expertise' rub_title='Eau, Assainissement' %}">Eau, Assainissement</a></li>
+      <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Expertise' rub_title='Enseignement' %}">Enseignement</a></li>
+      <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Expertise' rub_title='Entreprises' %}">Entreprises(créa/dev)</a></li>
+      <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Expertise' rub_title='Formation pro' %}">Formation pro</a></li>
+      <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Expertise' rub_title='Tourisme' %}">Tourisme</a></li>
+      <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Expertise' rub_title='Santé' %}">Santé</a></li>
+    </ul>
+  </li>
+  <li class="nav-item dropdown">
+    <a class="nav-link text-white dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Missions</a>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="{% url 'blog:category' cat='Missions' %}">Voir tout</a></li>
+      <li><hr class="dropdown-divider"></li>
+      <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Missions' rub_title='Interventions' %}">Interventions</a></li>
+      <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Missions' rub_title='Prospection' %}">Prospection</a></li>
+      <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Missions' rub_title='Journal de bord' %}">Journal de bord</a></li>
+    </ul>
+  </li>
+  <li class="nav-item dropdown">
+    <a class="nav-link text-white dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Projets</a>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="{% url 'blog:category' cat='Projets' %}">Voir tout</a></li>
+      <li><hr class="dropdown-divider"></li>
+      <li><a class="dropdown-item" href="#">A faire</a></li>
+    </ul>
+  </li>
+  <li class="nav-item dropdown">
+    <a class="nav-link text-white dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Infos du monde</a>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="{% url 'blog:category' cat='Monde' %}">Voir tout</a></li>
+      <li><hr class="dropdown-divider"></li>
+      <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Monde' rub_title='Géopolitique' %}">Géopolitique</a></li>
+      <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Monde' rub_title='Sécurité' %}">Sécurité</a></li>
+      <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Monde' rub_title='Sanitaire' %}">Sanitaire</a></li>
+      <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Monde' rub_title='Liens utiles' %}">Liens utiles</a></li>
+    </ul>
+  </li>
+</ul>
