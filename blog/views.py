@@ -131,7 +131,7 @@ def new_post(request):
 def edit_post(request, post_id):
     post = BlogPost.objects.get(id=post_id)
     content = post.content
-    # is_author(request, post) # cette merde ne marche pas
+    # is_author(request, post)  # cette merde ne marche pas
     if request.user.is_superuser:
         if request.method != 'POST':
 
@@ -149,18 +149,14 @@ def edit_post(request, post_id):
                 form.save()
                 return redirect("blog:index")
 
-    else:
-
+    if is_author(request, post):
         if request.method != 'POST':
 
             form = EditPostForm(instance=post)
             # hide published field and featured field if not superuser
+            form.fields["created_on"].widget = forms.HiddenInput()
             form.fields["published"].widget = forms.HiddenInput()
             form.fields["featured"].widget = forms.HiddenInput()
-            # print(form.fields["categories"].widget)
-            # if form.fields["categories"].widget == 'Missions':
-
-            #     form.fields["rubrique"].widget = forms.ShowInput()
 
         else:
             form = EditPostForm(instance=post, data=request.POST)
@@ -294,6 +290,5 @@ def rubrique_views(request, cat, rub_title):
 
 
 def is_author(request, post):
-    if request.user is not request.user.is_superuser:
-        if post.author != request.user:
-            raise Http404
+    if post.author != request.user:
+        raise Http404
