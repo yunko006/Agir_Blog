@@ -40,7 +40,7 @@ class NewsForm(forms.ModelForm):
 
     class Meta:
         model = NewsPost
-        fields = ['content']
+        fields = ['title', 'content']
         # labels = {"content": "Texte"}
 
 

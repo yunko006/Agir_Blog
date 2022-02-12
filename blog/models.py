@@ -87,5 +87,5 @@ class BlogPost(models.Model):
 
 
 class NewsPost(models.Model):
-
+    title = models.CharField(max_length=20, default="")
     content = tinymce_models.HTMLField()

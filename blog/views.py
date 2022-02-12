@@ -27,7 +27,8 @@ def index(request):
 
     # donnée pour le coté droit de la page
     news = NewsPost.objects.all()
-    rappel = Rappel.objects.all()
+    rappel_first = Rappel.objects.first()
+    rappel_last = Rappel.objects.last()
 
     # # categories
     # categories = Category.objects.filter(title=category.replace('-', " "))
@@ -40,13 +41,13 @@ def index(request):
     # second_third_featured_posts = featured_posts[1:3]
     # uniquement trois post mis en avant.
     trois_featured = featured_posts[:3]
-    # print(second_third_featured_posts)
+
     # pagination
     paginator = Paginator(blog_posts, 5)  # Show X posts per page.
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    context = {'news': news, 'rappel': rappel, 'page_obj': page_obj,
+    context = {'news': news, 'rappel_first': rappel_first, 'rappel_last': rappel_last, 'page_obj': page_obj,
                'trois_featured': trois_featured}
 
     return render(request, 'blog/index.html', context)
