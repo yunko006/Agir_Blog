@@ -35,34 +35,36 @@
   {% endifequal %}
 
   <li class="nav-item dropdown">
-    <a class="nav-link text-white dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Délégation</a>
+    <a class="nav-link text-white dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">D.I.</a>
     <ul class="dropdown-menu">
       <li><a class="dropdown-item" href="{% url 'blog:category' cat='Délégation' %}">Voir tout</a></li>
       <li><hr class="dropdown-divider"></li>
-      <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Expertise' rub_title='Fonctionnement' %}">Fonctionnement</a></li>
-      <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Expertise' rub_title='Communication' %}">Communication</a></li>
-      <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Expertise' rub_title='Partenaires' %}">Partenaires</a></li>
-            <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Expertise' rub_title='Outils' %}">Outils</a></li>
-      <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Expertise' rub_title='Flash' %}">Flash infos</a></li>
+      <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='D.I.' rub_title='Actualités' %}">Actualités</a></li>
+      <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='D.I.' rub_title='Organisation' %}">Organisation</a></li>
+      <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='D.I.' rub_title='Partenaires' %}">Partenaires</a></li>
+      <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='D.I.' rub_title='Outils' %}">Outils</a></li>
     </ul>
   </li>
   <li class="nav-item dropdown">
-    <a class="nav-link text-white dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Activité en délégations</a>
+    <a class="nav-link text-white dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">En délégations</a>
     <ul class="dropdown-menu">
       <li><a class="dropdown-item" href="{% url 'blog:category' cat='Activité' %}">Voir tout</a></li>
       <li><hr class="dropdown-divider"></li>
-      <li><a class="dropdown-item" href="#">A faire</a></li>
+      <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Activité' rub_title='Actualités' %}">Actualités</a></li>
+      <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Activité' rub_title='Partenariats' %}">Partenariats</a></li>
+      <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Activité' rub_title='Réseaux' %}">Réseaux</a></li>
     </ul>
   </li>
   <li class="nav-item dropdown">
-    <a class="nav-link text-white dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Expertise</a>
+    <a class="nav-link text-white dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Expertises</a>
     <ul class="dropdown-menu">
       <li><a class="dropdown-item" href="{% url 'blog:category' cat='Expertise' %}">Voir tout</a></li>
       <li><hr class="dropdown-divider"></li>
+      <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Expertise' rub_title='Général' %}">Général</a></li>
       <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Expertise' rub_title='Développement rural' %}">Dévelop. Rural</a></li>
       <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Expertise' rub_title='Eau, Assainissement' %}">Eau, Assainissement</a></li>
       <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Expertise' rub_title='Enseignement' %}">Enseignement</a></li>
-      <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Expertise' rub_title='Entreprises' %}">Entreprises(créa/dev)</a></li>
+      <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Expertise' rub_title='Entreprises' %}">Entreprises(créa & dev)</a></li>
       <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Expertise' rub_title='Formation pro' %}">Formation pro</a></li>
       <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Expertise' rub_title='Tourisme' %}">Tourisme</a></li>
       <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Expertise' rub_title='Santé' %}">Santé</a></li>
@@ -73,8 +75,10 @@
     <ul class="dropdown-menu">
       <li><a class="dropdown-item" href="{% url 'blog:category' cat='Missions' %}">Voir tout</a></li>
       <li><hr class="dropdown-divider"></li>
+      <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Missions' rub_title='Général' %}">Général</a></li>
       <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Missions' rub_title='Interventions' %}">Interventions</a></li>
       <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Missions' rub_title='Prospection' %}">Prospection</a></li>
+      <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Missions' rub_title='Rapports détaillés' %}">Rapports détaillés</a></li>
       <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Missions' rub_title='Journal de bord' %}">Journal de bord</a></li>
     </ul>
   </li>
@@ -83,7 +87,7 @@
     <ul class="dropdown-menu">
       <li><a class="dropdown-item" href="{% url 'blog:category' cat='Projets' %}">Voir tout</a></li>
       <li><hr class="dropdown-divider"></li>
-      <li><a class="dropdown-item" href="#">A faire</a></li>
+      <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Projets' rub_title='Général' %}">Général</a></li>
     </ul>
   </li>
   <li class="nav-item dropdown">
@@ -91,9 +95,9 @@
     <ul class="dropdown-menu">
       <li><a class="dropdown-item" href="{% url 'blog:category' cat='Monde' %}">Voir tout</a></li>
       <li><hr class="dropdown-divider"></li>
+      <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Monde' rub_title='Infos Pays' %}">Infos Pays</a></li>
       <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Monde' rub_title='Géopolitique' %}">Géopolitique</a></li>
       <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Monde' rub_title='Sécurité' %}">Sécurité</a></li>
-      <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Monde' rub_title='Sanitaire' %}">Sanitaire</a></li>
       <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Monde' rub_title='Liens utiles' %}">Liens utiles</a></li>
     </ul>
   </li>
