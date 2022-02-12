@@ -4,7 +4,6 @@
 
 {% block content %}
 
-  <hr>
   <form action="{% url 'blog:edit_news' news.id %}" method="post">
     {% csrf_token %}
     {% bootstrap_form form %}
