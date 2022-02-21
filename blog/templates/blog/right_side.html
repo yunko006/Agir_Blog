@@ -3,7 +3,16 @@
 
 <div class="position-sticky" style="top: 2rem;">
         <div class="p-4 mb-3 border border-3 rounded">
-          <h4 class="fst-italic">{{ rappel_first.title }}</h4>
+
+            <div class="d-flex align-items-center">
+              <div class="flex-shrink-0">
+               <img src="https://img.icons8.com/cotton/64/000000/bookmark-ribbon--v2.png" style="max-width:60%;"/>
+              </div>
+              <div class="flex-grow-1">
+                <h4 class="fw-bold">{{ rappel_first.title }}</h4>
+              </div>
+            </div>
+
 
           <p class="mb-0">{{ rappel_first.content|safe }}</p>
           {% if request.user.is_superuser %}
@@ -13,8 +22,16 @@
           {% endif %}
         </div>
         <!-- 2eme rappel -->
+
         <div class="w-20 d-outline-block p-4 mb-3 border border-2 rounded border-info">
-          <h4 class="fst-italic">{{ rappel_last.title }}</h4>
+          <div class="d-flex align-items-center">
+              <div class="flex-shrink-0">
+                <img src="https://img.icons8.com/external-bearicons-blue-bearicons/64/000000/external-warning-essential-collection-bearicons-blue-bearicons.png" style="max-width:60%;"/>
+              </div>
+              <div class="flex-grow-1">
+                <h4 class="fw-bold">{{ rappel_last.title }}</h4>
+              </div>
+            </div>
           <p class="mb-0">{{ rappel_last.content|safe }}</p>
           {% if request.user.is_superuser %}
             {% buttons %}
@@ -25,7 +42,14 @@
         <!-- News importante du site -->
         <div class="p-4">
           {% for new in news %}
-          <h4 class="fst-italic">{{ new.title }}</h4>
+          <div class="d-flex align-items-center">
+              <div class="flex-shrink">
+                <img src="https://img.icons8.com/cotton/64/000000/memo--v1.png" style="max-width:60%;"/>
+              </div>
+              <div class="flex-grow-1">
+                <h4 class="fw-bold">{{ new.title }}</h4>
+              </div>
+            </div>
           <hr>
           <p class="mb-0"> {{ new.content|safe }}</p>
           {% if request.user.is_superuser %}

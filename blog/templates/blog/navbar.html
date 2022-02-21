@@ -5,9 +5,9 @@
 
 <!-- header -->
 
-<header class="py-3">
-    <div class="container-fluid d-grid gap-3 align-items-center" style="grid-template-columns: 1fr 2fr;">
-      <a href="http://www.agirabcd.eu" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+<div class="container">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-2">
+      <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
          <img src="{% static 'blog/Logo.png' %}" alt="logo" height="80">
       </a>
 
@@ -15,15 +15,19 @@
         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
          <img src="{% static 'blog/logo-header-2.png' %}" alt="logo" width="500">
         </a>
+      </div>
 
-        <div class="flex-shrink-0 dropdown">
+        <div class="col-md-3 text-end">
           <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-            <span>Liens utiles</span>
+            <span>Liens Agir utiles</span>
           </a>
           <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-            <li><a class="dropdown-item" href="https://www.agirabcd.fr/intragir31/index.php/fr/liendumenuconnexionamoi">INTRAGIR</a></li>
-            <li><a class="dropdown-item" href="https://gaia.agirabcd.fr/">GAIA</a></li>
-            <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCI3fcCXznu1c3IEKL4VuK4g">Youtube</a></li>
+            <li><a class="dropdown-item" href="https://www.agirabcd.fr/intragir31/attachments/article/32/Qui%20Fait%20Quoi%20-%2030-06-2021.pdf">Qui fait quoi ?</a></li>
+            <li><a class="dropdown-item" href="https://gaia.agirabcd.fr/application/AGIRabcd/Annuaires/AnimateursInternationaux.pdf">Annuaire AI</a></li>
+            <li><a class="dropdown-item" href="http://www.agirabcd.eu">AGIRabcd</a></li>
+            <li><a class="dropdown-item" href="https://www.agirabcd.fr/intragir31/index.php/fr/liendumenuconnexionamoi">Intragir</a></li>
+            <li><a class="dropdown-item" href="https://gaia.agirabcd.fr/">Gaia missions</a></li>
+            <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCI3fcCXznu1c3IEKL4VuK4g">Chaîne Youtube</a></li>
             <li><hr class="dropdown-divider"></li>
             {% if user.is_authenticated %}
               <li><a class="dropdown-item" href="{% url 'users:logout' %}">Se déconnecter</a></li>
@@ -35,6 +39,7 @@
       </div>
     </div>
   </header>
+</div>
 <!-- fin new header -->
 {% include 'blog/links.html' %}
 

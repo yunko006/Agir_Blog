@@ -1,8 +1,8 @@
 <!-- navs -->
 <ul class="nav text-white justify-content-center flex-column flex-sm-row" style="background-color:darkblue;">
   {% if request.user.is_superuser %}
-  <li class="nav-item dropdown">
-    <a class="nav-link text-white dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Article</a>
+  <li class="nav-item dropdown mx-5">
+    <a class="nav-link text-white dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Ecrire un article</a>
     <ul class="dropdown-menu">
       <li><a class="dropdown-item" href="{% url 'blog:new_post' %}">Ecrire un article</a></li>
       <li><hr class="dropdown-divider"></li>
@@ -43,6 +43,8 @@
       <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='D.I.' rub_title='Organisation' %}">Organisation</a></li>
       <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='D.I.' rub_title='Partenaires' %}">Partenaires</a></li>
       <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='D.I.' rub_title='Outils' %}">Outils</a></li>
+      <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='D.I.' rub_title='Liens utiles' %}">Liens utiles</a></li>
+
     </ul>
   </li>
   <li class="nav-item dropdown">
@@ -95,7 +97,7 @@
     <ul class="dropdown-menu">
       <li><a class="dropdown-item" href="{% url 'blog:category' cat='Monde' %}">Voir tout</a></li>
       <li><hr class="dropdown-divider"></li>
-      <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Monde' rub_title='Infos Pays' %}">Infos Pays</a></li>
+      <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Monde' rub_title='Responsable Pays' %}">Responsable Pays</a></li>
       <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Monde' rub_title='Géopolitique' %}">Géopolitique</a></li>
       <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Monde' rub_title='Sécurité' %}">Sécurité</a></li>
       <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Monde' rub_title='Liens utiles' %}">Liens utiles</a></li>
