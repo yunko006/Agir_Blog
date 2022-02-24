@@ -1,8 +1,8 @@
 {% extends 'blog/base.html' %}
 
 {% block page_header %}
+<h2>Article dans la rubrique : {{ rub_title }} </h2>
 <hr>
-<p>Article dans la rubrique : {{ rub_title }} </p>
 {% endblock page_header %}
 
 {% block content %}
@@ -21,8 +21,8 @@
 
 {% else %}
 
-<h2>Cette page n'existe pas...</h2>
+<p>Pas d'articles dans cette rubrique.</p>
 
 {%endif %}
-<p><a href="{% url 'blog:index' %}">Retour à l'acceuil</a></p>
+<p><a href="{% url 'blog:index' %}">Retour à l'accueil</a></p>
 {% endblock content %}
