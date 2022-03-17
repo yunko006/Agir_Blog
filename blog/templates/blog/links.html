@@ -92,4 +92,20 @@
       <li><a class="dropdown-item" href="{% url 'blog:rubrique' cat='Monde' rub_title='Infos pratiques' %}">Infos pratiques</a></li>
     </ul>
   </li>
+  <!-- Avis de recherche -->
+  <li class="nav-item dropdown">
+    <a class="nav-link text-white dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Avis de recherche
+      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+        {{ avis|length }}
+        <span class="visually-hidden">unread messages</span>
+      </span>
+    </a>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="{% url 'blog:index_avis' %}">Voir les avis de recherhce</a></li>
+      <li><hr class="dropdown-divider"></li>
+      {% if request.user.is_superuser %}
+        <li><a class="dropdown-item" href="{% url 'blog:new_avis'%}">Ecrire un avis de recherche</a></li>
+      {% endif %}
+    </ul>
+  </li>
 </ul>
