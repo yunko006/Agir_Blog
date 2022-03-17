@@ -23,4 +23,7 @@ urlpatterns = [
     # draft
     path('draft/', views.index_draft_post, name='draft'),
     path('publication/', views.index_a_publier_post, name='publication'),
+    # avis de recherche
+    path('new_avis/', views.new_avis_recherche, name='new_avis'),
+    path('index_avis/', views.index_avis_recherche, name='index_avis'),
 ]

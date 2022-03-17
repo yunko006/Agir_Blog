@@ -47,8 +47,11 @@ def index(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
+    # avis count
+    avis = AvisDeRecherche.objects.all()
+
     context = {'news': news, 'rappel_first': rappel_first, 'rappel_last': rappel_last, 'page_obj': page_obj,
-               'trois_featured': trois_featured}
+               'trois_featured': trois_featured, 'avis': avis}
 
     return render(request, 'blog/index.html', context)
 
@@ -56,9 +59,7 @@ def index(request):
 @login_required
 @user_passes_test(more_than_lecteur)
 def index_draft_post(request):
-    # if not request.user.is_superuser:
-    #     draft_post = BlogPost.draftobjects.filter(
-    #         author=request.user).order_by('-created_on')
+    avis = AvisDeRecherche.objects.all()
 
     if request.user.is_superuser:
         draft_post = BlogPost.draftobjects.order_by('-created_on')
@@ -73,7 +74,10 @@ def index_draft_post(request):
     else:
         raise Http404
 
-    context = {'draft_post': draft_post}
+    context = {
+        'draft_post': draft_post,
+        'avis': avis
+    }
 
     return render(request, 'blog/draft.html', context)
 
@@ -81,6 +85,8 @@ def index_draft_post(request):
 @login_required
 @user_passes_test(must_be_correcteur)
 def index_a_publier_post(request):
+    avis = AvisDeRecherche.objects.all()
+
     if request.user.is_superuser:
         a_publier_post = BlogPost.a_publier_objects.order_by('-created_on')
 
@@ -90,7 +96,10 @@ def index_a_publier_post(request):
     else:
         raise Http404
 
-    context = {'a_publier_post': a_publier_post}
+    context = {
+        'a_publier_post': a_publier_post,
+        "avis": avis
+    }
 
     return render(request, 'blog/a_publier.html', context)
 
@@ -132,7 +141,7 @@ def new_post(request):
 def edit_post(request, post_id):
     post = BlogPost.objects.get(id=post_id)
     content = post.content
-    # is_author(request, post)  # cette merde ne marche pas
+    # if superuse can edit all post
     if request.user.is_superuser:
         if request.method != 'POST':
 
@@ -150,6 +159,7 @@ def edit_post(request, post_id):
                 form.save()
                 return redirect("blog:index")
 
+    # if not usersuper user can only edit their posts
     if is_author(request, post):
         if request.method != 'POST':
 
@@ -243,10 +253,12 @@ def caterogy_views(request, cat):
     featured_posts = BlogPost.featured_objects.all()
     # uniquement trois post mis en avant.
     trois_featured = featured_posts[:3]
-
+    # avis
+    avis = AvisDeRecherche.objects.all()
     # donnée pour le coté droit de la page
     news = NewsPost.objects.all()
-    rappel = Rappel.objects.all()
+    rappel_first = Rappel.objects.first()
+    rappel_last = Rappel.objects.last()
 
     # pagination a faire plus tard
 
@@ -255,7 +267,9 @@ def caterogy_views(request, cat):
         'categories': categories,
         'trois_featured': trois_featured,
         'news': news,
-        'rappel': rappel
+        'rappel_first': rappel_first,
+        "rappel_last": rappel_last,
+        'avis': avis,
     }
 
     return render(request, 'blog/category.html', context)
@@ -266,15 +280,15 @@ def rubrique_views(request, cat, rub_title):
 
     rubrique_title = BlogPost.postobjects.filter(rubrique__title=rub_title)
     # rubrique_parent = BlogPost.postobjects.filter(rubrique__category=cat)
-
+    # avis
+    avis = AvisDeRecherche.objects.all()
     # featured articles
     featured_posts = BlogPost.featured_objects.all()
     # uniquement trois post mis en avant.
     trois_featured = featured_posts[:3]
 
     # donnée pour le coté droit de la page
-    news = NewsPost.objects.all()
-    rappel = Rappel.objects.all()
+    # pas de donnée
 
     # pagination a faire plus tard
 
@@ -283,8 +297,7 @@ def rubrique_views(request, cat, rub_title):
         'rub_title': rub_title,
         'rubrique_title': rubrique_title,
         'trois_featured': trois_featured,
-        'news': news,
-        'rappel': rappel
+        'avis': avis
     }
 
     return render(request, 'blog/rubrique.html', context)
@@ -293,3 +306,31 @@ def rubrique_views(request, cat, rub_title):
 def is_author(request, post):
     if post.author != request.user:
         raise Http404
+
+
+def index_avis_recherche(request):
+    avis = AvisDeRecherche.objects.all()
+
+    context = {
+        "avis": avis
+    }
+
+    return render(request, 'blog/index_avis_recherche.html', context)
+
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def new_avis_recherche(request):
+    if request.method != "POST":
+        form = AvisDeRechercheForm()
+
+    else:
+        form = AvisDeRechercheForm(data=request.POST)
+        if form.is_valid():
+            new_avis = form.save(commit=False)
+            new_avis.save()
+            return redirect('blog:index')
+
+    context = {"form": form}
+
+    return render(request, "blog/create_avis_recherche.html", context)
