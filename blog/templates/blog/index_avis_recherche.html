@@ -1,0 +1,34 @@
+{% extends 'blog/base.html' %}
+{% load bootstrap5 %}
+
+{% block page_header %}
+<h2>Avis de recherche</h2>
+{% endblock page_header %}
+
+{% block content %}
+{% if avis %}
+    {% for post in avis %}
+    <article class="blog-post mb-4">
+          <h3 class="mb-0"><a class="text-decoration-none" href="#">{{ post.title }}</a></h3>
+          <p class="mb-0 blog-post-meta"></p>
+
+          <p> {{ post.content|safe }} <a href="#"></a></p>
+
+        </article>
+        <hr>
+{% endfor %}
+
+{% else %}
+
+<p>Pas d'articles dans cette rubrique.</p>
+
+{%endif %}
+<p><a href="{% url 'blog:index' %}">Retour à l'accueil</a></p>
+
+{% buttons %}
+  {% if request.user.is_superuser %}
+      <a class="btn btn-primary" href="{% url 'blog:new_avis'%}">Poster un avis de recherche</a>
+  {% endif %}
+{% endbuttons %}
+
+{% endblock content %}
