@@ -45,9 +45,14 @@ class BlogPost(models.Model):
         def get_queryset(self):
             return super().get_queryset().filter(status='edit', published=False)
 
+    class SuspenduPostManager(models.Manager):
+        def get_queryset(self):
+            return super().get_queryset().filter(status='suspendu', published=False)
+
     options = (
         ('draft', 'Brouillon'),
         ('edit', 'A publier'),
+        ('suspendu', 'Parution Suspendu'),
     )
 
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -89,3 +94,12 @@ class BlogPost(models.Model):
 class NewsPost(models.Model):
     title = models.CharField(max_length=20, default="")
     content = tinymce_models.HTMLField()
+
+
+class AvisDeRecherche(models.Model):
+    title = models.CharField(max_length=100)
+    content = tinymce_models.HTMLField()
+    # created_on = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.title
