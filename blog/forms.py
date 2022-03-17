@@ -1,7 +1,7 @@
 from django import forms
 from tinymce.widgets import TinyMCE
 
-from .models import BlogPost, NewsPost, Rappel
+from .models import BlogPost, NewsPost, Rappel, AvisDeRecherche
 
 
 class PostForm(forms.ModelForm):
@@ -49,3 +49,15 @@ class EditRappelForm(forms.ModelForm):
     class Meta:
         model = Rappel
         fields = ['title', 'content']
+
+
+class AvisDeRechercheForm(forms.ModelForm):
+
+    class Meta:
+        model = AvisDeRecherche
+
+        fields = ['title', 'content']
+        labels = {
+            "title": "Titre de l'avis de recherche",
+            "content": "Avis de recherche"
+        }
