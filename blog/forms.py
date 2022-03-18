@@ -56,8 +56,9 @@ class AvisDeRechercheForm(forms.ModelForm):
     class Meta:
         model = AvisDeRecherche
 
-        fields = ['title', 'content']
+        fields = ['title', 'content', "created_on"]
         labels = {
             "title": "Titre de l'avis de recherche",
-            "content": "Avis de recherche"
+            "content": "Avis de recherche",
+            'created_on': "Date",
         }
