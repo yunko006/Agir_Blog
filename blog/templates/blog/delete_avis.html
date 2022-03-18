@@ -1,0 +1,22 @@
+{% extends 'blog/base.html' %}
+{% load bootstrap5 %}
+{% block title %} Supprimer {% endblock %}
+
+{% block page_header %}
+
+{% endblock %}
+
+{% block content %}
+
+  <hr>
+  <p>Etes vous sur de vouloir supprimer cet avis de recherche ?</p>
+  <form action="{% url 'blog:delete_avis' avis.id %}" method="post">
+    {% csrf_token %}
+
+    {% buttons %}
+    <button name="submit" class="btn btn-primary">Oui, supprimer</button>
+    <a class="btn btn-secondary" href="{% url 'blog:index_avis'%}">Non, annuler</a>
+    {% endbuttons %}
+  </form>
+
+{% endblock content %}

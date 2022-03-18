@@ -108,12 +108,13 @@ def index_a_publier_post(request):
 def post(request, post_id):
 
     post = BlogPost.objects.get(id=post_id)
+    avis = AvisDeRecherche.objects.all()
 
-    # coté droit du site
-    news = NewsPost.objects.all()
-    rappel = Rappel.objects.all()
+    context = {
+        'post': post,
+        'avis': avis
+    }
 
-    context = {'post': post, 'news': news, 'rappel': rappel}
     return render(request, 'blog/post.html', context)
 
 
@@ -309,7 +310,7 @@ def is_author(request, post):
 
 
 def index_avis_recherche(request):
-    avis = AvisDeRecherche.objects.all()
+    avis = AvisDeRecherche.objects.order_by('-created_on')
 
     context = {
         "avis": avis
@@ -334,3 +335,43 @@ def new_avis_recherche(request):
     context = {"form": form}
 
     return render(request, "blog/create_avis_recherche.html", context)
+
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def edit_avis_recherche(request, avis_id):
+    avis = AvisDeRecherche.objects.get(id=avis_id)
+    content = avis.content
+
+    if request.method != 'POST':
+
+        form = AvisDeRechercheForm(instance=avis)
+
+    else:
+        form = AvisDeRechercheForm(instance=avis, data=request.POST)
+
+        if form.is_valid():
+
+            form.save()
+            return redirect('blog:index_avis')
+
+    context = {"avis": avis, "content": content, "form": form}
+
+    return render(request, 'blog/edit_avis_recherche.html', context)
+
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def delete_avis_recherche(request, avis_id):
+    avis = AvisDeRecherche.objects.get(id=avis_id)
+    content = avis.content
+
+    if request.method == 'POST':
+        avis.delete()
+        return redirect('blog:index_avis')
+
+    context = {
+        "avis": avis
+    }
+
+    return render(request, 'blog/delete_avis.html', context)

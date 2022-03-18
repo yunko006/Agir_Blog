@@ -1,0 +1,19 @@
+{% extends 'blog/base.html' %}
+{% load bootstrap5 %}
+{% block title %} Modifier {% endblock %}
+
+
+{% block content %}
+
+  <form action="{% url 'blog:edit_avis' avis.id %}" method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+
+    {% buttons %}
+    <button name="submit" class="btn btn-primary">Enregistrer</button>
+    <a class="btn btn-secondary" href="{% url 'blog:index_avis' %}">Annuler</a>
+    {% endbuttons %}
+  </form>
+
+{% endblock content %}
+

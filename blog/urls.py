@@ -26,4 +26,7 @@ urlpatterns = [
     # avis de recherche
     path('new_avis/', views.new_avis_recherche, name='new_avis'),
     path('index_avis/', views.index_avis_recherche, name='index_avis'),
+    path('edit_avis/<int:avis_id>', views.edit_avis_recherche, name='edit_avis'),
+    path('delete_avis/<int:avis_id>',
+         views.delete_avis_recherche, name='delete_avis'),
 ]
