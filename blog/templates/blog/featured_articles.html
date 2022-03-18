@@ -6,7 +6,7 @@
       <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative bg-light">
         <div class="col p-4 d-flex flex-column position-static">
           <h3 class="mb-0 text-primary">{{ post.title }}</h3>
-          <div class="mb-0 text-muted">{{ post.created_on|date:"d-m-Y" }} écrit par {{ post.redacteur }} - {{ post.qualite }}</div>
+          <div class="mb-0 text-muted">{{ post.created_on|date:"d/m/Y" }} écrit par {{ post.redacteur }} - {{ post.qualite }}</div>
           <p class="d-inline-block mb-2 text-primary">{{ post.categories }}</p>
           <p class="card-text mb-auto">{{ post.content|safe|truncatewords:20 }}</p>
           <a href="{% url 'blog:post' post.id %}" class="stretched-link"></a>

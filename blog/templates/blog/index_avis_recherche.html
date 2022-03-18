@@ -1,8 +1,10 @@
 {% extends 'blog/base.html' %}
 {% load bootstrap5 %}
+{% block title %} Avis de recherche {% endblock %}
+
 
 {% block page_header %}
-<h2>Avis de recherche</h2>
+<h2 class="text-center">Avis de recherche</h2>
 {% endblock page_header %}
 
 {% block content %}
@@ -10,11 +12,17 @@
     {% for post in avis %}
     <article class="blog-post mb-4">
           <h3 class="mb-0"><a class="text-decoration-none" href="#">{{ post.title }}</a></h3>
-          <p class="mb-0 blog-post-meta"></p>
+          <p class="mb-0 blog-post-meta">{{ post.created_on|date:"d/m/Y" }}</p>
 
           <p> {{ post.content|safe }} <a href="#"></a></p>
 
         </article>
+        {% if request.user.is_superuser %}
+          {% buttons %}
+            <a class="btn btn-primary" href="{% url 'blog:edit_avis' post.id %}">Modifier</a>
+            <a class="btn btn-danger" href="{% url 'blog:delete_avis' post.id %}">Supprimer</a>
+          {% endbuttons %}
+        {% endif %}
         <hr>
 {% endfor %}
 

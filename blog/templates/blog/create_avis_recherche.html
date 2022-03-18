@@ -1,6 +1,6 @@
 {% extends 'blog/base.html' %}
 {% load bootstrap5 %}
-
+{% block title %} Nouveau {% endblock %}
 
 {% block content %}
   <form method="post" action="{% url 'blog:new_avis' %}" class="form">
