@@ -99,7 +99,7 @@ class NewsPost(models.Model):
 class AvisDeRecherche(models.Model):
     title = models.CharField(max_length=100)
     content = tinymce_models.HTMLField()
-    # created_on = models.DateTimeField(default=timezone.now)
+    created_on = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.title
