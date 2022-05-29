@@ -97,9 +97,26 @@ class NewsPost(models.Model):
 
 
 class AvisDeRecherche(models.Model):
+
+    class NotArchivedManager(models.Manager):
+        def get_queryset(self):
+            return super().get_queryset().filter(archiver=False)
+
+    class ArchivedManager(models.Manager):
+        def get_queryset(self):
+            return super().get_queryset().filter(archiver=True)
+
     title = models.CharField(max_length=100)
     content = tinymce_models.HTMLField()
     created_on = models.DateTimeField(default=timezone.now)
+    archiver = models.BooleanField(default=False)
+
+    # default manager
+    objects = models.Manager()
+    # manager if not archiver
+    pas_archiver_object = NotArchivedManager()
+    # manager if archiver
+    archiver_object = ArchivedManager()
 
     def __str__(self):
         return self.title
