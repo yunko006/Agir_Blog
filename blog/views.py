@@ -310,13 +310,23 @@ def is_author(request, post):
 
 
 def index_avis_recherche(request):
-    avis = AvisDeRecherche.objects.order_by('-created_on')
+    avis = AvisDeRecherche.pas_archiver_object.order_by('-created_on')
 
     context = {
         "avis": avis
     }
 
     return render(request, 'blog/index_avis_recherche.html', context)
+
+
+def index_avis_recherche_archiver(request):
+    avis = AvisDeRecherche.archiver_object.order_by('-created_on')
+
+    context = {
+        "avis": avis
+    }
+
+    return render(request, 'blog/index_avis_recherche_archiver.html', context)
 
 
 @login_required
@@ -345,10 +355,10 @@ def edit_avis_recherche(request, avis_id):
 
     if request.method != 'POST':
 
-        form = AvisDeRechercheForm(instance=avis)
+        form = EditAvisDeRechercheForm(instance=avis)
 
     else:
-        form = AvisDeRechercheForm(instance=avis, data=request.POST)
+        form = EditAvisDeRechercheForm(instance=avis, data=request.POST)
 
         if form.is_valid():
 
