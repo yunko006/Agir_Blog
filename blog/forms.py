@@ -62,3 +62,17 @@ class AvisDeRechercheForm(forms.ModelForm):
             "content": "Avis de recherche",
             'created_on': "Date",
         }
+
+
+class EditAvisDeRechercheForm(forms.ModelForm):
+
+    class Meta:
+        model = AvisDeRecherche
+
+        fields = ['title', 'content', "created_on", "archiver"]
+        labels = {
+            "title": "Titre de l'avis de recherche",
+            "content": "Avis de recherche",
+            'created_on': "Date",
+            'archiver': "Archiver ?"
+        }
