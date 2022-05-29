@@ -48,7 +48,7 @@ def index(request):
     page_obj = paginator.get_page(page_number)
 
     # avis count
-    avis = AvisDeRecherche.objects.all()
+    avis = AvisDeRecherche.pas_archiver_object.all()
 
     context = {'news': news, 'rappel_first': rappel_first, 'rappel_last': rappel_last, 'page_obj': page_obj,
                'trois_featured': trois_featured, 'avis': avis}
@@ -59,7 +59,7 @@ def index(request):
 @login_required
 @user_passes_test(more_than_lecteur)
 def index_draft_post(request):
-    avis = AvisDeRecherche.objects.all()
+    avis = AvisDeRecherche.pas_archiver_object.all()
 
     if request.user.is_superuser:
         draft_post = BlogPost.draftobjects.order_by('-created_on')
@@ -85,7 +85,7 @@ def index_draft_post(request):
 @login_required
 @user_passes_test(must_be_correcteur)
 def index_a_publier_post(request):
-    avis = AvisDeRecherche.objects.all()
+    avis = AvisDeRecherche.pas_archiver_object.all()
 
     if request.user.is_superuser:
         a_publier_post = BlogPost.a_publier_objects.order_by('-created_on')
@@ -108,7 +108,7 @@ def index_a_publier_post(request):
 def post(request, post_id):
 
     post = BlogPost.objects.get(id=post_id)
-    avis = AvisDeRecherche.objects.all()
+    avis = AvisDeRecherche.pas_archiver_object.all()
 
     context = {
         'post': post,
@@ -255,7 +255,7 @@ def caterogy_views(request, cat):
     # uniquement trois post mis en avant.
     trois_featured = featured_posts[:3]
     # avis
-    avis = AvisDeRecherche.objects.all()
+    avis = AvisDeRecherche.pas_archiver_object.all()
     # donnée pour le coté droit de la page
     news = NewsPost.objects.all()
     rappel_first = Rappel.objects.first()
@@ -282,7 +282,7 @@ def rubrique_views(request, cat, rub_title):
     rubrique_title = BlogPost.postobjects.filter(rubrique__title=rub_title)
     # rubrique_parent = BlogPost.postobjects.filter(rubrique__category=cat)
     # avis
-    avis = AvisDeRecherche.objects.all()
+    avis = AvisDeRecherche.pas_archiver_object.all()
     # featured articles
     featured_posts = BlogPost.featured_objects.all()
     # uniquement trois post mis en avant.
