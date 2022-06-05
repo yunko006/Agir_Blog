@@ -43,7 +43,7 @@ def index(request):
     trois_featured = featured_posts[:3]
 
     # pagination
-    paginator = Paginator(blog_posts, 5)  # Show X posts per page.
+    paginator = Paginator(blog_posts, 7)  # Show X posts per page.
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
