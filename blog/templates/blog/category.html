@@ -16,7 +16,7 @@
     <article class="blog-post mb-4">
       <h3 class="mb-0"><a class="text-decoration-none" href="{% url 'blog:post' post.id %}">{{ post.title }}</a></h3>
       <p class="mb-0 blog-post-meta">{{ post.created_on|date:"d/m/Y" }} écrit par {{ post.redacteur }} - {{ post.qualite }}</p>
-      <p class="text-primary">{{ post.categories }}</p>
+      <p class="text-primary">{{ post.categories }} - {{ post.rubrique.title }}</p>
 
       <p> {{ post.content|safe|truncatewords:60 }} <a href="{% url 'blog:post' post.id %}"></a></p>
 
