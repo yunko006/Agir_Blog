@@ -23,8 +23,8 @@
     <link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}">
 
     <!-- tinymce -->
-    {{ form.media }}
     <script src="https://cdn.tiny.cloud/1/ne73pc7lloxh0sb6hj1ib391zy3119rdmey6tuhmm6zeyvj2/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    {% block header %} {{ form.media }} {% endblock header %}
 
 </head>
 <body>
