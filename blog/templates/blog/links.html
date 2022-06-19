@@ -103,10 +103,11 @@
       </span>
     </a>
     <ul class="dropdown-menu">
-      <li><a class="dropdown-item" href="{% url 'blog:index_avis' %}">En cours</a></li>
+      <li><a class="dropdown-item" href="{% url 'blog:index_avis' %}">Intervenant En cours</a></li>
+      <li><a class="dropdown-item" href="{% url 'blog:index_porteur' %}">Porteur En cours</a></li>
       <li><a class="dropdown-item" href="{% url 'blog:index_avis_archiver' %}">Archives</a></li>
-      <li><hr class="dropdown-divider"></li>
       {% if request.user.is_superuser %}
+      <li><hr class="dropdown-divider"></li>
         <li><a class="dropdown-item" href="{% url 'blog:new_avis'%}">Ecrire un avis de recherche</a></li>
       {% endif %}
     </ul>
