@@ -329,6 +329,16 @@ def index_porteur_recherche(request):
     return render(request, 'blog/index_avis_recherche.html', context)
 
 
+def index_intervenant_recherche(request):
+    avis = AvisDeRecherche.pas_archiver_intervenant.order_by('-created_on')
+
+    context = {
+        "avis": avis
+    }
+
+    return render(request, 'blog/index_avis_recherche.html', context)
+
+
 def index_avis_recherche_archiver(request):
     avis = AvisDeRecherche.archiver_object.order_by('-created_on')
 
