@@ -99,6 +99,10 @@ class NewsPost(models.Model):
 
 class AvisDeRecherche(models.Model):
 
+    class NotArchivedManager(models.Manager):
+        def get_queryset(self):
+            return super().get_queryset().filter(archiver=False)
+
     class NotArchivedIntervenantManager(models.Manager):
         def get_queryset(self):
             return super().get_queryset().filter(archiver=False, status='intervenant')
@@ -126,7 +130,9 @@ class AvisDeRecherche(models.Model):
     # default manager
     objects = models.Manager()
     # manager if not archiver and status = intervenant
-    pas_archiver_object = NotArchivedIntervenantManager()
+    pas_archiver_object = NotArchivedManager()
+    # manager if pas archiver and status = intervenant
+    pas_archiver_intervenant = NotArchivedIntervenantManager()
     # manager if pas archiver and status = porteur
     pas_archiver_porteur = NotArchivedPorteurManager()
     # manager if archiver
