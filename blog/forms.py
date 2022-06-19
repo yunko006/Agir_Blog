@@ -56,7 +56,7 @@ class AvisDeRechercheForm(forms.ModelForm):
     class Meta:
         model = AvisDeRecherche
 
-        fields = ['title', 'content', "created_on"]
+        fields = ['title', 'content', "created_on", "status"]
         labels = {
             "title": "Titre de l'avis de recherche",
             "content": "Avis de recherche",
@@ -69,7 +69,7 @@ class EditAvisDeRechercheForm(forms.ModelForm):
     class Meta:
         model = AvisDeRecherche
 
-        fields = ['title', 'content', "created_on", "archiver"]
+        fields = ['title', 'content', "created_on", "status", "archiver"]
         labels = {
             "title": "Titre de l'avis de recherche",
             "content": "Avis de recherche",
