@@ -27,6 +27,7 @@ class Rappel(models.Model):
     title = models.CharField(max_length=20)
     content = tinymce_models.HTMLField()
 
+
 class BlogPost(models.Model):
 
     class FeaturedPostManager(models.Manager):
@@ -98,23 +99,36 @@ class NewsPost(models.Model):
 
 class AvisDeRecherche(models.Model):
 
-    class NotArchivedManager(models.Manager):
+    class NotArchivedIntervenantManager(models.Manager):
         def get_queryset(self):
-            return super().get_queryset().filter(archiver=False)
+            return super().get_queryset().filter(archiver=False, status='intervenant')
+
+    class NotArchivedPorteurManager(models.Manager):
+        def get_queryset(self):
+            return super().get_queryset().filter(archiver=False, status='porteur')
 
     class ArchivedManager(models.Manager):
         def get_queryset(self):
             return super().get_queryset().filter(archiver=True)
 
+    options = (
+        ('intervenant', 'Intervenant'),
+        ('porteur', 'Porteur Projet'),
+    )
+
     title = models.CharField(max_length=100)
     content = tinymce_models.HTMLField()
     created_on = models.DateTimeField(default=timezone.now)
     archiver = models.BooleanField(default=False)
+    status = models.CharField(
+        max_length=20, choices=options, default='intervenant')
 
     # default manager
     objects = models.Manager()
-    # manager if not archiver
-    pas_archiver_object = NotArchivedManager()
+    # manager if not archiver and status = intervenant
+    pas_archiver_object = NotArchivedIntervenantManager()
+    # manager if pas archiver and status = porteur
+    pas_archiver_porteur = NotArchivedPorteurManager()
     # manager if archiver
     archiver_object = ArchivedManager()
 
